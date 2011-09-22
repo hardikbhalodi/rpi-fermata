@@ -1,6 +1,5 @@
 package fermataUI;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +46,6 @@ public class FermataFrame extends JFrame
 		fermataMenu.add(fermataExit);
 		
 		JPanel temp = new JPanel();
-		temp.setBackground(Color.green);
 		
 		temp.setPreferredSize(new Dimension(180,180));
 		
