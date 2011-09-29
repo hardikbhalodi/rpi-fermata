@@ -24,7 +24,7 @@ public class FermataFrame extends JFrame
 		
 		initializeFrame();
 		layoutFrame();
-	}
+	}	
 	
 	private void initializeFrame()
 	{
