@@ -39,7 +39,7 @@ public class connectionHandler implements Runnable{
 			local = LocalDevice.getLocalDevice();
 			local.setDiscoverable(DiscoveryAgent.GIAC);
 
-			UUID uuid = new UUID(80087355); // "04c6093b-0000-1000-8000-00805f9b34fb"
+			UUID uuid = new UUID("04c6093b00001000800000805f9b34fb", false);
 			String url = "btspp://localhost:" + uuid.toString() + ";name=RemoteBluetooth";
 			notifier = (StreamConnectionNotifier)Connector.open(url);
 		} catch (Exception e) {
@@ -52,6 +52,8 @@ public class connectionHandler implements Runnable{
 				System.out.println("waiting for connection...");
 	                  	connection = notifier.acceptAndOpen();
 
+	             System.out.println("connection established, spawning thread");
+	                  	
 				Thread connectionProcessor = new Thread(new connectionProcessor(connection));
 				connectionProcessor.start();
 			} catch (Exception e) {

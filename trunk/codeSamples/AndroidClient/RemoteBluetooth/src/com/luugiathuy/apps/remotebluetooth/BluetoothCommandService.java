@@ -3,6 +3,8 @@ package com.luugiathuy.apps.remotebluetooth;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.UUID;
 
 import android.bluetooth.BluetoothAdapter;
@@ -235,13 +237,23 @@ public class BluetoothCommandService {
             mmDevice = device;
             BluetoothSocket tmp = null;
 
-            // Get a BluetoothSocket for a connection with the
-            // given BluetoothDevice
-            try {
-                tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
-            } catch (IOException e) {
-                Log.e(TAG, "create() failed", e);
-            }
+            Method m;
+			try
+			{
+				m = device.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
+				tmp = (BluetoothSocket) m.invoke(device, 1);
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			
             mmSocket = tmp;
         }
 
