@@ -1,5 +1,6 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.util.Vector;
@@ -34,16 +35,30 @@ class TcpConnectThreadHandler implements Runnable
 					//System.out.println(inputStream.read());
 					StringBuffer bufarray = new StringBuffer();
 					byte[] buffer = new byte[8];
-					for(int i=0; i<8; i++){
+					for(int i=0; i<8; i++)
+					{
 						
 						bufarray.append((char)inputStream.read());
+						
+						if(bufarray.toString().compareToIgnoreCase("stop") == 0)
+						{
+							System.out.println("Client disconnected");
+							return;
+						}
 					}
 					
 					System.out.println(bufarray);					
 				}
 			}
 		}
-		catch(Exception ex){}
+		catch(IOException ex)
+		{
+			System.out.println("Jesus fuck\n");
+		}
+		catch(Exception ex)
+		{
+			
+		}
 
 	}
 }

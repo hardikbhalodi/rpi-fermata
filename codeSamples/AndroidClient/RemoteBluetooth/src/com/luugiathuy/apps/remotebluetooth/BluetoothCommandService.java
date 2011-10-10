@@ -13,6 +13,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -422,8 +423,14 @@ public class BluetoothCommandService {
 
         public void cancel() {
             try {
-            	mmOutStream.write(EXIT_CMD);
-                mmSocket.close();
+            	
+            	
+            	mmOutStream.write("stop".getBytes());
+            
+            	if(mmSocket != null)
+            		mmSocket.close();
+            	if(mmTCPSocket != null)
+            		mmTCPSocket.close();
             } catch (IOException e) {
                 Log.e(TAG, "close() of connect socket failed", e);
             }
