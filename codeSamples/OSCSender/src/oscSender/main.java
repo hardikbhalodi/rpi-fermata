@@ -27,8 +27,8 @@ public class main
 			
 			OSCMessage msg = new OSCMessage("/sayhello", message);
 			
-			while (1 == 1)
-			{
+//			while (1 == 1)
+//			{
 				try
 				{
 					sender.send(msg);
@@ -39,7 +39,7 @@ public class main
 					e.printStackTrace();
 				}
 				Thread.sleep(5000);
-			}
+//			}
 		}
 		catch (Exception e)
 		{
