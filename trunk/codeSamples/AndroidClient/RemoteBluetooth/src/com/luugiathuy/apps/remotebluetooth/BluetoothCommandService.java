@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.UUID;
 
 import android.bluetooth.BluetoothAdapter;
@@ -111,6 +113,7 @@ public class BluetoothCommandService {
         mConnectThread.start();
         setState(STATE_CONNECTING);
     }
+   
     
     /**
      * Start the ConnectedThread to begin managing a Bluetooth connection
@@ -214,13 +217,33 @@ public class BluetoothCommandService {
 //	        
 //        	connect(mSavedDevice);   	
 //        } else {
+    		
         	setState(STATE_LISTEN);
 	        // Send a failure message back to the Activity
 	        Message msg = mHandler.obtainMessage(RemoteBluetooth.MESSAGE_TOAST);
 	        Bundle bundle = new Bundle();
-	        bundle.putString(RemoteBluetooth.TOAST, "Device connection was lost");
+	        bundle.putString(RemoteBluetooth.TOAST, "Device connection was lost. Attempting TCP connection");
 	        msg.setData(bundle);
 	        mHandler.sendMessage(msg);
+	    
+	        try {
+	        	setState(STATE_CONNECTING);
+				mConnectedThread = new ConnectedThread(new Socket("192.168.1.126", 9876));
+				 bundle.putString(RemoteBluetooth.TOAST, "TCP Connection success.");
+				 setState(STATE_LISTEN);
+			     msg.setData(bundle);
+				setState(STATE_CONNECTED);
+			} catch (UnknownHostException e) {
+				 bundle.putString(RemoteBluetooth.TOAST, "TCP Connection failed.");
+				 setState(STATE_LISTEN);
+			     msg.setData(bundle);
+			     mHandler.sendMessage(msg);
+			} catch (IOException e) {
+				 bundle.putString(RemoteBluetooth.TOAST, "TCP Connection failed.");
+				 setState(STATE_LISTEN);
+			     msg.setData(bundle);
+			     mHandler.sendMessage(msg);
+			}
 //        }
     }
     
@@ -238,8 +261,7 @@ public class BluetoothCommandService {
             BluetoothSocket tmp = null;
 
             Method m;
-			try
-			{
+			try {
 				m = device.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
 				tmp = (BluetoothSocket) m.invoke(device, 1);
 			} catch (SecurityException e) {
@@ -305,13 +327,35 @@ public class BluetoothCommandService {
      * It handles all incoming and outgoing transmissions.
      */
     private class ConnectedThread extends Thread {
-        private final BluetoothSocket mmSocket;
+        private BluetoothSocket mmSocket;
+        private Socket mmTCPSocket;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
+        
+        public ConnectedThread(Socket socket)
+        {
+        	  Log.d(TAG, "create ConnectedThread");
+              mmTCPSocket = socket;
+              mmSocket = null;
+              InputStream tmpIn = null;
+              OutputStream tmpOut = null;
+
+              // Get the BluetoothSocket input and output streams
+              try {
+                  tmpIn = socket.getInputStream();
+                  tmpOut = socket.getOutputStream();
+              } catch (IOException e) {
+                  Log.e(TAG, "temp sockets not created", e);
+              }
+
+              mmInStream = tmpIn;
+              mmOutStream = tmpOut;
+        }
 
         public ConnectedThread(BluetoothSocket socket) {
             Log.d(TAG, "create ConnectedThread");
             mmSocket = socket;
+            mmTCPSocket = null;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
 
