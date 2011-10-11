@@ -27,7 +27,7 @@ public class main
 			
 			OSCMessage msg = new OSCMessage("/sayhello", message);
 			
-//			while (1 == 1)
+//			while (1 == 1) // Because sometimes you need an infinite loop.
 //			{
 				try
 				{
