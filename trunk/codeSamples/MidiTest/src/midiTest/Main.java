@@ -1,7 +1,8 @@
 package midiTest;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Vector;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiDevice.Info;
@@ -13,76 +14,33 @@ import javax.sound.midi.Receiver;
 
 public class Main
 {	
-	/**
-	 * @param args
-	 */
+	public static Vector<MidiDevice> validDevices;
+	public static MidiDevice activeDev;
+	public static Transmitter activeTransmit;
+	public static Vector<Info> midiInfo;
+	public static midireceiver mr;
+	
 	public static void main(String[] args)
 	{
-		Info[] midiInfo = MidiSystem.getMidiDeviceInfo();
+		midiInfo = new Vector<Info>(Arrays.asList(MidiSystem.getMidiDeviceInfo()));
+		Transmitter activeTransmit = null;
 		
-		ArrayList<MidiDevice> validDevices = new ArrayList<MidiDevice>();
+		mr = new midireceiver();
 		
-		for (Info i: midiInfo)
-		{			
-			MidiDevice md;
-			
-			try
-			{
-				md = MidiSystem.getMidiDevice(i);
-				if (md.getMaxTransmitters() != 0 && !md.getDeviceInfo().getName().equals("Real Time Sequencer"))
-				{
-					validDevices.add(md);
-				}
-			}
-			catch (MidiUnavailableException e)
-			{
-				e.printStackTrace();
-			}
-		}	
+		validDevices = new Vector<MidiDevice>();
 		
-		for (MidiDevice md : validDevices)
-		{
-			Info i = md.getDeviceInfo();
-			
-			System.out.println("Name: " + i.getName());
-			System.out.println("Description " + i.getDescription());
-			System.out.println("Vendor: " + i.getVendor());
-			System.out.println("Version: " + i.getVersion());
-			
-			System.out.println("Transmitters: " + md.getMaxTransmitters() + "\n\n");
-		}
+		Thread scanThread = new Thread(new midiSweeper());
 
-		MidiDevice md = validDevices.get(0);
+		scanThread.start();
 		
-		Transmitter tm = null;
-		try
-		{
-			tm = md.getTransmitter();
-		}
-		catch (MidiUnavailableException e)
-		{
-			e.printStackTrace();
-			System.out.println("Transmitter get fail");
-		}
-		try
-		{
-			md.open();
-		}
-		catch (MidiUnavailableException e)
-		{
-			System.out.println("md open fail");
-			e.printStackTrace();
-		}
-		tm.setReceiver(new midireceiver());
-		
-
 		Scanner in = new Scanner(System.in);
 		
-		while (!in.nextLine().toLowerCase().equals("quit") && !in.nextLine().toLowerCase().equals("q"))
+		while (!in.nextLine().toLowerCase().equals("quit"))
 		{
-			System.out.println("To quit, enter 'quit' or 'q'");
+			System.out.println("To quit, enter 'quit'");
 		}
-		tm.close();
+		if (activeTransmit != null)
+			activeTransmit.close();
 		System.exit(0);
 	}
 }
@@ -106,4 +64,97 @@ class midireceiver implements Receiver
 		}
 		System.out.print("\n");
 	}	
+}
+
+class midiSweeper implements Runnable
+{
+	@Override
+	public void run()
+	{
+		while (1 == 1)
+		{
+			Vector<MidiDevice> tempDev = new Vector<MidiDevice>();
+			Main.midiInfo = new Vector<Info>(Arrays.asList(MidiSystem.getMidiDeviceInfo()));
+			for (Info i: Main.midiInfo)
+			{			
+				MidiDevice md;
+				
+				try
+				{
+					md = MidiSystem.getMidiDevice(i);
+					if (md.getMaxTransmitters() != 0 && !md.getDeviceInfo().getName().equals("Real Time Sequencer"))
+					{
+						System.out.println("device found");
+						tempDev.add(md);
+					}
+				}
+				catch (MidiUnavailableException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			Main.validDevices = tempDev;
+			
+			
+			if (Main.validDevices.size() > 0 && Main.activeDev != null)
+			{
+				if (Main.validDevices.get(0) == Main.activeDev)
+				{
+					System.out.println("Device in use");
+				}
+				else
+				{
+					System.out.println("Device changed");
+					Main.activeTransmit.close();
+					Main.activeDev.close();
+					Main.activeDev = Main.validDevices.get(0);
+					
+					try
+					{
+						Main.activeTransmit = Main.activeDev.getTransmitter();
+						Main.activeTransmit.setReceiver(Main.mr);
+					}
+					catch (MidiUnavailableException e)
+					{
+						e.printStackTrace();
+					}
+				}	
+			}
+			else if (Main.validDevices.size() > 0)
+			{
+				System.out.println("Device connected");
+				Main.activeDev = Main.validDevices.get(0);
+				
+				try
+				{
+					Main.activeTransmit = Main.activeDev.getTransmitter();
+					Main.activeTransmit.setReceiver(Main.mr);
+					Main.activeDev.open();
+				}
+				catch (MidiUnavailableException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			else if(Main.activeDev != null)
+			{
+				System.out.println("Disconnected");
+				Main.activeTransmit.close();
+				Main.activeDev.close();
+				Main.activeDev = null;
+			}
+			
+			
+			
+			try
+			{
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
 }
