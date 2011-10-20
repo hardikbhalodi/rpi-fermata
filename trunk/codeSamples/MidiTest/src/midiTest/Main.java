@@ -71,7 +71,7 @@ class midiSweeper implements Runnable
 	@Override
 	public void run()
 	{
-		while (1 == 1)
+		for(;;)
 		{
 			Vector<MidiDevice> tempDev = new Vector<MidiDevice>();
 			Main.midiInfo = new Vector<Info>(Arrays.asList(MidiSystem.getMidiDeviceInfo()));
