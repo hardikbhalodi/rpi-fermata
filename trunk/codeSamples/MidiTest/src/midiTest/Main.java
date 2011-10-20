@@ -84,7 +84,6 @@ class midiSweeper implements Runnable
 					md = MidiSystem.getMidiDevice(i);
 					if (md.getMaxTransmitters() != 0 && !md.getDeviceInfo().getName().equals("Real Time Sequencer"))
 					{
-						System.out.println("device found");
 						tempDev.add(md);
 					}
 				}
@@ -99,11 +98,7 @@ class midiSweeper implements Runnable
 			
 			if (Main.validDevices.size() > 0 && Main.activeDev != null)
 			{
-				if (Main.validDevices.get(0) == Main.activeDev)
-				{
-					System.out.println("Device in use");
-				}
-				else
+				if (Main.validDevices.get(0) != Main.activeDev)
 				{
 					System.out.println("Device changed");
 					Main.activeTransmit.close();
@@ -139,7 +134,7 @@ class midiSweeper implements Runnable
 			}
 			else if(Main.activeDev != null)
 			{
-				System.out.println("Disconnected");
+				System.out.println("Device disconnected");
 				Main.activeTransmit.close();
 				Main.activeDev.close();
 				Main.activeDev = null;
