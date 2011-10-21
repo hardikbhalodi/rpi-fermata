@@ -88,12 +88,8 @@ public class FermataActivity extends Activity {
 				}
 				String fullText = "x" + xcoord + "y" + ycoord;
 				textView.setText(fullText);
-				byte[] writeBuf=new byte[8];
-				writeBuf = fullText.getBytes();
-				//byte[] writeBuf = new byte[4];
-				writeBuf=String.valueOf(event.getX()).getBytes();
 
-				mCommandService.write(writeBuf);
+				mCommandService.write(fullText);
 				return true;
 			}
 		});

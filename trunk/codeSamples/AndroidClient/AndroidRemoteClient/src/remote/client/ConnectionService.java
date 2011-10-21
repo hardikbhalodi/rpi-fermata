@@ -1,5 +1,7 @@
 package remote.client;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -208,6 +210,18 @@ public class ConnectionService {
 		r.write(out);
 	}
 
+	public void write(String out) {
+		// Create temporary object
+		ConnectedThread r;
+		// Synchronize a copy of the ConnectedThread
+		synchronized (this) {
+			if (mState != STATE_CONNECTED) return;
+			r = mConnectedThread;
+		}
+		// Perform the write unsynchronized
+		r.write(out);
+	}
+	
 	/**
 	 * Indicate that the connection attempt failed and notify the UI Activity.
 	 */
@@ -333,6 +347,8 @@ public class ConnectionService {
 		private Socket mmTCPSocket;
 		private final InputStream mmInStream;
 		private final OutputStream mmOutStream;
+		private DataOutputStream dataOut;
+		private DataInputStream dataIn;
 
 		public ConnectedThread(Socket socket)
 		{
@@ -352,6 +368,8 @@ public class ConnectionService {
 
 			mmInStream = tmpIn;
 			mmOutStream = tmpOut;
+			dataOut = new DataOutputStream(mmOutStream);
+			dataIn = new DataInputStream(mmInStream);
 		}
 
 		public ConnectedThread(BluetoothSocket socket) {
@@ -419,6 +437,16 @@ public class ConnectionService {
 				//                        .sendToTarget();
 			} catch (IOException e) {
 				Log.e(TAG, "Exception during write", e);
+			}
+		}
+		
+		public void write(String out) {
+			
+			try {
+				dataOut.writeUTF(out);
+				dataOut.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 
