@@ -10,11 +10,11 @@ class TcpConnectThreadHandler implements Runnable
 {
 	@SuppressWarnings("unused")
 	private Socket socket;
-	
+
 	private BlockingQueue<byte []> inbound;
 	private BlockingQueue<byte []> outbound;
-	
-	
+
+
 	public TcpConnectThreadHandler(Socket incoming_socket, BlockingQueue<byte []> inbound, BlockingQueue<byte []> outbound){
 		this.socket = incoming_socket;
 		this.inbound = inbound;
@@ -25,39 +25,50 @@ class TcpConnectThreadHandler implements Runnable
 	{
 		try{
 
-			while(true)
+			
+			// prepare to receive data
+			InputStream inputStream = socket.getInputStream();	
+			DataInputStream userInput = new DataInputStream(inputStream);
+			System.out.println("waiting for input");
+			String data;
+			while (true) 
 			{
-				// prepare to receive data
-				InputStream inputStream = socket.getInputStream();	
-				System.out.println("waiting for input");
-				while (true) 
+				
+				data = userInput.readUTF();
+				System.out.println(data);
+				/*
+				//System.out.println(inputStream.read());
+				StringBuffer bufarray = new StringBuffer();
+				byte[] buffer = new byte[8];
+				for(int i=0; i<8; i++)
 				{
-					//System.out.println(inputStream.read());
-					StringBuffer bufarray = new StringBuffer();
-					byte[] buffer = new byte[8];
-					for(int i=0; i<8; i++)
+
+					bufarray.append((char)inputStream.read());
+
+					if(bufarray.toString().compareToIgnoreCase("stop") == 0)
 					{
-						
-						bufarray.append((char)inputStream.read());
-						
-						if(bufarray.toString().compareToIgnoreCase("stop") == 0)
-						{
-							System.out.println("Client disconnected");
-							return;
-						}
+						System.out.println("Client disconnected");
+						return;
 					}
-					
-					System.out.println(bufarray);					
 				}
+
+				System.out.println(bufarray);		
+				*/			
 			}
+
 		}
 		catch(IOException ex)
 		{
-			System.out.println("Jesus fuck\n");
+			System.out.println("Connection Closed\n");
+			try {
+				socket.close();
+			} catch (IOException e) {
+		
+			}
 		}
 		catch(Exception ex)
 		{
-			
+
 		}
 
 	}
