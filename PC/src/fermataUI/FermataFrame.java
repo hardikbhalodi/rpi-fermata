@@ -10,6 +10,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import fermataMIDI.MidiHandler;
+
 @SuppressWarnings("serial")
 public class FermataFrame extends JFrame
 {
@@ -17,11 +19,14 @@ public class FermataFrame extends JFrame
 	private JMenuBar fermataMenuBar;
 	private JMenuItem fermataExit;
 	private JMenu fermataMenu;
+	private MidiDeviceBox mdb;
+	private MidiHandler mh;
 	
 	public FermataFrame()
 	{
 		super();
 		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initializeFrame();
 		layoutFrame();
 	}	
@@ -37,6 +42,9 @@ public class FermataFrame extends JFrame
 		fermataExit = new JMenuItem("Close Fermata");
 		
 		fermataExit.addActionListener(listen);
+		
+		mdb = new MidiDeviceBox();
+		mh = new MidiHandler(mdb);
 	}
 	
 	private void layoutFrame()
@@ -45,11 +53,7 @@ public class FermataFrame extends JFrame
 		fermataMenuBar.add(fermataMenu);
 		fermataMenu.add(fermataExit);
 		
-		JPanel temp = new JPanel();
-		
-		temp.setPreferredSize(new Dimension(180,180));
-		
-		this.setContentPane(temp);
+		this.setContentPane(mdb);
 	}
 	
 	private class MenuListener implements ActionListener
