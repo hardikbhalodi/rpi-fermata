@@ -41,6 +41,7 @@ public class Main
 		}
 		if (activeTransmit != null)
 			activeTransmit.close();
+		System.out.println("Quitting");
 		System.exit(0);
 	}
 }
