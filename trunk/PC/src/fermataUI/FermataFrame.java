@@ -1,6 +1,5 @@
 package fermataUI;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import fermataMIDI.MidiHandler;
+import fermataOSC.OSCSender;
 
 @SuppressWarnings("serial")
 public class FermataFrame extends JFrame
@@ -21,6 +21,9 @@ public class FermataFrame extends JFrame
 	private JMenu fermataMenu;
 	private MidiDeviceBox mdb;
 	private MidiHandler mh;
+	private OSCSendBox osb;
+	
+	private JPanel hostPane;
 	
 	public FermataFrame()
 	{
@@ -34,6 +37,7 @@ public class FermataFrame extends JFrame
 	private void initializeFrame()
 	{
 		this.setTitle("Fermata");
+		hostPane = new JPanel();
 		
 		MenuListener listen = new MenuListener(this);
 		
@@ -44,6 +48,7 @@ public class FermataFrame extends JFrame
 		fermataExit.addActionListener(listen);
 		
 		mdb = new MidiDeviceBox();
+		osb = new OSCSendBox(new OSCSender()); //TODO initialize elsewhere, store it. It'll come up again.
 		mh = new MidiHandler(mdb);
 	}
 	
@@ -53,7 +58,10 @@ public class FermataFrame extends JFrame
 		fermataMenuBar.add(fermataMenu);
 		fermataMenu.add(fermataExit);
 		
-		this.setContentPane(mdb);
+		this.setContentPane(hostPane);
+		
+		hostPane.add(mdb);
+		hostPane.add(osb);
 	}
 	
 	private class MenuListener implements ActionListener
