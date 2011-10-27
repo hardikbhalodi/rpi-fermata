@@ -33,6 +33,7 @@ public final class MidiHandler
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public void updateDeviceList(Vector<MidiDevice> deviceList)
 	{
 		if (!validDevices.equals(deviceList))
