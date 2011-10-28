@@ -8,44 +8,55 @@ import javax.sound.midi.Transmitter;
 
 import fermataUI.MidiDeviceBox;
 
-public final class MidiHandler
+public abstract class MidiHandler
 {
-	private Vector<MidiDevice> validDevices;
-	private MidiDevice activeDev;
-	private Transmitter activeTransmit;
+	private static Vector<MidiDevice> validDevices;
+	private static MidiDevice activeDev;
+	private static Transmitter activeTransmit;
 	
-	private MidiReceiver mr;
+	private static MidiReceiver mr;
 	@SuppressWarnings("unused")
-	private MidiSweeper ms;
-	private MidiDeviceBox mdb;
+	private static MidiSweeper ms;
+	private static MidiDeviceBox mdb;
 	
-	public MidiHandler(MidiDeviceBox mdb)
+	private static Boolean started = false;
+	
+	public static void startMIDIService()
 	{
-		this.mdb = mdb;
+		if (started)
+			return;
+		System.out.println("Midihandler is being constructed even though that's literally impossible");
 		
 		validDevices = new Vector<MidiDevice>();		
 		
 		mr = new MidiReceiver();
 		
-		mdb.setMidiHandler(this);
-		ms = new MidiSweeper(this);
+		ms = new MidiSweeper();
 		
+		started = true;
 	}
 	
-	
 	@SuppressWarnings("unchecked")
-	public void updateDeviceList(Vector<MidiDevice> deviceList)
+	public static void updateDeviceList(Vector<MidiDevice> deviceList)
 	{
 		if (!validDevices.equals(deviceList))
 		{
 			System.out.println("Updating midi device selection box");
-			mdb.updateList(deviceList);
+			if (mdb != null)
+				mdb.updateList(deviceList);
 			validDevices = (Vector<MidiDevice>) deviceList.clone();
 		}
 	}
 	
-	public void setActiveDevice(MidiDevice md)
+	public static void setDeviceBox(MidiDeviceBox mdb)
 	{
+		MidiHandler.mdb = mdb;
+		mdb.updateList(validDevices);
+	}
+	
+	public static void setActiveDevice(MidiDevice md)
+	{
+		System.out.println("Setting active device");
 		if (md == null)
 		{
 			if (activeDev != null)
