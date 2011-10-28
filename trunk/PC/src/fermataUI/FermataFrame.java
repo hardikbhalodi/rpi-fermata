@@ -9,9 +9,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import fermataMIDI.MidiHandler;
-import fermataOSC.OSCSender;
-
 @SuppressWarnings("serial")
 public class FermataFrame extends JFrame
 {
@@ -20,7 +17,6 @@ public class FermataFrame extends JFrame
 	private JMenuItem fermataExit;
 	private JMenu fermataMenu;
 	private MidiDeviceBox mdb;
-	private MidiHandler mh;
 	private OSCSendBox osb;
 	
 	private JPanel hostPane;
@@ -48,8 +44,8 @@ public class FermataFrame extends JFrame
 		fermataExit.addActionListener(listen);
 		
 		mdb = new MidiDeviceBox();
-		osb = new OSCSendBox(new OSCSender()); //TODO initialize elsewhere, store it. It'll come up again.
-		mh = new MidiHandler(mdb);
+		osb = new OSCSendBox(); //TODO initialize elsewhere, store it. It'll come up again.
+	//	mh = new MidiHandler(mdb);
 	}
 	
 	private void layoutFrame()

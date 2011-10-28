@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.text.NumberFormat;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
@@ -25,9 +24,9 @@ public class OSCSendBox extends JPanel
 	private JCheckBox localHostBox;
 	
 	private String oldIP = "localhost";
-	private int oldPort = 7777;
+	private int oldPort = OSCSender.DEFAULT_PORT;
 	
-	public OSCSendBox(OSCSender oscsend)
+	public OSCSendBox()
 	{
 		super();
 		
@@ -38,8 +37,9 @@ public class OSCSendBox extends JPanel
 	private void initialize()
 	{
 		ipField = new JFormattedTextField();
-		portField = new JFormattedTextField(NumberFormat.getIntegerInstance());
-		portField.setValue(OSCSender.getDefaultPort());
+		portField = new JFormattedTextField();
+
+		portField.setValue(OSCSender.DEFAULT_PORT);
 		
 		oscEnableBox = new JCheckBox("Enable OSC pass-through", false);
 		localHostBox = new JCheckBox("Use LocalHost", true);		
@@ -85,9 +85,43 @@ public class OSCSendBox extends JPanel
 		
 		portField.setEnabled(false);
 		ipField.setEnabled(false);
+		
+		
 		localHostBox.setEnabled(false);
 		
+		portChanged();
+		ipChanged();
+		
 		innerPane.add(ipPane);
+	}
+
+	private void portChanged()
+	{			
+		int newPort = (Integer) portField.getValue();
+
+		if (newPort == oldPort)
+			return;
+		else
+		{
+			oldPort = newPort;
+			newPort = OSCSender.setPort(newPort);
+		
+			portField.setValue(newPort);
+		}
+	}
+	private void ipChanged()
+	{			
+		String newIP = ipField.getText();
+		
+		if (newIP.equals(oldIP))
+			return;
+		else
+		{
+			oldIP = newIP;
+			newIP = OSCSender.setIP(newIP);
+			
+			ipField.setText(newIP);
+		}
 	}
 	
 	private class CustomListener implements ActionListener, FocusListener
@@ -135,37 +169,6 @@ public class OSCSendBox extends JPanel
 				portChanged();
 			else if (e.getSource() == ipField)
 				ipChanged();
-		}
-
-		private void portChanged()
-		{			
-			int newPort = (Integer) portField.getValue();
-
-			if (newPort == oldPort)
-				return;
-			else
-			{
-				oldPort = newPort;
-				System.out.println("portchanged");
-				newPort = OSCSender.setPort(newPort);
-			
-				portField.setValue(newPort);
-			}
-		}
-		private void ipChanged()
-		{			
-			String newIP = ipField.getText();
-			
-			if (newIP.equals(oldIP))
-				return;
-			else
-			{
-				oldIP = newIP;
-				System.out.println("ip changed");
-				newIP = OSCSender.setIP(newIP);
-				
-				ipField.setText(newIP);
-			}
 		}
 	}
 }

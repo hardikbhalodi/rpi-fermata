@@ -9,9 +9,9 @@ import com.illposed.osc.OSCPortOut;
 
 import fermataUtil.Coordinate;
 
-public final class OSCSender
+public abstract class OSCSender
 {
-	private static int defaultPort = 7777;
+	public static final int DEFAULT_PORT = 7777;
 	private static InetAddress localHost;
 	
 	private static int port;
@@ -21,8 +21,7 @@ public final class OSCSender
 	
 	private static Boolean enabled = false;
 	
-
-	public OSCSender()
+	public static void startOSCService()
 	{
 		try
 		{
@@ -35,7 +34,8 @@ public final class OSCSender
 			e.printStackTrace();
 		}
 		
-		port = defaultPort;
+		IP = localHost;
+		port = DEFAULT_PORT;
 	}
 	
 	public static int setPort(int port)
@@ -76,11 +76,6 @@ public final class OSCSender
 			e.printStackTrace();
 		}
 		return OSCSender.IP.getHostName();
-	}
-
-	public static int getDefaultPort()
-	{
-		return defaultPort;
 	}
 	
 	public static Boolean sendMessage(CoordinateMessage cm)

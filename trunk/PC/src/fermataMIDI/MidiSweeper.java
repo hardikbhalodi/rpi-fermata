@@ -10,14 +10,10 @@ import javax.sound.midi.MidiDevice.Info;
 
 public final class MidiSweeper implements Runnable
 {
-	
-	private MidiHandler mh;
 	private Vector<Info> midiInfo;
 	
-	public MidiSweeper(MidiHandler mh)
-	{
-		this.mh = mh;
-		
+	public MidiSweeper()
+	{		
 		Thread t = new Thread(this);
 		
 		t.start();
@@ -47,7 +43,7 @@ public final class MidiSweeper implements Runnable
 				}
 			}
 			
-			mh.updateDeviceList(tempDev);
+			MidiHandler.updateDeviceList(tempDev);
 			tempDev.clear();
 			try
 			{

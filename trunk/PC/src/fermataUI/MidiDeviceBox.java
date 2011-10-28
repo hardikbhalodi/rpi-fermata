@@ -24,7 +24,6 @@ public final class MidiDeviceBox extends JPanel
 	private MidiDevice selectedDevice;
 	private JComboBox comboBox;
 	private JCheckBox checkBox;
-	private MidiHandler mh;
 	
 	public MidiDeviceBox()
 	{
@@ -50,6 +49,8 @@ public final class MidiDeviceBox extends JPanel
 		comboBox.addActionListener(cl);
 		
 		validDevices = new Vector<MidiDevice>();
+
+		MidiHandler.setDeviceBox(this);
 	}
 	
 	private void layoutPanel()
@@ -61,10 +62,6 @@ public final class MidiDeviceBox extends JPanel
 		this.add(comboBox, BorderLayout.CENTER);
 	}
 	
-	public void setMidiHandler(MidiHandler mh)
-	{
-		this.mh = mh;
-	}
 	public void updateList(Vector<MidiDevice> newDevices)
 	{
 		if (validDevices.equals(newDevices))
@@ -138,28 +135,24 @@ public final class MidiDeviceBox extends JPanel
 	}
 	
 	private class customListener implements ActionListener
-	{
+	{		
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			if (mh != null)
+			if (e.getSource() == comboBox)
 			{
-				if (e.getSource() == comboBox)
-				{
-					if (checkBox.isSelected())
-						mh.setActiveDevice((MidiDevice) comboBox.getSelectedItem());
-					
-					System.out.println("Combobox manipulated");
-				}
-				else if (e.getSource() == checkBox)
-				{
-					if (checkBox.isSelected())
-						mh.setActiveDevice((MidiDevice) comboBox.getSelectedItem());			
-					else
-						mh.setActiveDevice(null);
-	
-					System.out.println("Checkbox manipulated");
-				}
+				if (checkBox.isSelected())
+					MidiHandler.setActiveDevice((MidiDevice) comboBox.getSelectedItem());
+				
+				System.out.println("Combobox manipulated");
+			}
+			else if (e.getSource() == checkBox)
+			{
+				if (checkBox.isSelected())
+					MidiHandler.setActiveDevice((MidiDevice) comboBox.getSelectedItem());			
+				else
+					MidiHandler.setActiveDevice(null);
+						System.out.println("Checkbox manipulated");
 			}
 		}
 	}

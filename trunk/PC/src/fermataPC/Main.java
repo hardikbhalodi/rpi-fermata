@@ -2,6 +2,7 @@ package fermataPC;
 
 import javax.swing.UIManager;
 
+import fermataMIDI.MidiHandler;
 import fermataOSC.OSCSender;
 import fermataUI.FermataFrame;
 
@@ -18,7 +19,8 @@ public class Main
 			System.out.println("System L&F fail. Using default/cross-platform L&F");
 		}
 		
-		OSCSender oscSend = new OSCSender();
+		OSCSender.startOSCService();
+		MidiHandler.startMIDIService();
 		FermataFrame window = new FermataFrame();
 		window.setVisible(true);
 		window.pack();
