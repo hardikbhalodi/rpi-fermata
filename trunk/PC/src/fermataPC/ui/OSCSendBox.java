@@ -1,4 +1,4 @@
-package fermata.ui;
+package fermataPC.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,7 +12,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import fermata.osc.OSCSender;
+import fermataPC.osc.OSCSender;
 
 @SuppressWarnings("serial")
 public class OSCSendBox extends JPanel

@@ -1,11 +1,11 @@
-package fermata.pc;
+package fermataPC;
 
 import javax.swing.UIManager;
 
-import fermata.midi.MidiHandler;
-import fermata.osc.OSCSender;
-import fermata.soundOut.LoadSoundFile;
-import fermata.ui.FermataFrame;
+import fermataPC.midi.MidiHandler;
+import fermataPC.osc.OSCSender;
+import fermataPC.soundOut.LoadSoundFile;
+import fermataPC.ui.FermataFrame;
 
 /**
  * Exists solely to start Fermata.

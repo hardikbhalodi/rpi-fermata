@@ -1,4 +1,4 @@
-package fermata.ui;
+package fermataPC.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -15,7 +15,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-import fermata.midi.MidiHandler;
+import fermataPC.midi.MidiHandler;
 
 @SuppressWarnings("serial")
 public final class MidiDeviceBox extends JPanel
