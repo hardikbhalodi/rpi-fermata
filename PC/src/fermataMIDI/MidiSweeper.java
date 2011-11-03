@@ -8,10 +8,24 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.MidiDevice.Info;
 
+/**
+ * The MidiSweeper constantly checks the status of MIDI devices on the system.
+ * 
+ * The MidiSweeper, once instantiated, this opens a new thread
+ * and runs it constantly to check the status of MIDI devices;
+ * and forwards the new information along to the MidiHandler.
+ * Creating more than one sweeper is unnecessary and computationally
+ * expensive.
+ * @author katzj2
+ *
+ */
 public final class MidiSweeper implements Runnable
 {
 	private Vector<Info> midiInfo;
 	
+	/**
+	 * The constructor starts the background process running.
+	 */
 	public MidiSweeper()
 	{		
 		Thread t = new Thread(this);
@@ -19,22 +33,29 @@ public final class MidiSweeper implements Runnable
 		t.start();
 	}
 	
+	/*
+	 * This eventually loops endlessly to query the system for MIDI devices, so
+	 * that the MidiHandler can be updated.
+	 * (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run()
 	{
 		Vector<MidiDevice> tempDev = new Vector<MidiDevice>();
-		for(;;)
+		for(;;) //loop endlessly.
 		{
-			midiInfo = new Vector<Info>(Arrays.asList(MidiSystem.getMidiDeviceInfo()));
-			for (Info i: midiInfo)
+			midiInfo = new Vector<Info>(Arrays.asList(MidiSystem.getMidiDeviceInfo())); // gets devices
+			for (Info i: midiInfo) // for each device;
 			{			
 				MidiDevice md;
 				try
 				{
-					md = MidiSystem.getMidiDevice(i);
-					if (md.getMaxTransmitters() != 0 && !md.getDeviceInfo().getName().equals("Real Time Sequencer"))
-					{
-						tempDev.add(md);
+					md = MidiSystem.getMidiDevice(i); // recover the device from its description
+					if (md.getMaxTransmitters() != 0 // if it's a transmitter, or can transmit
+							&& !md.getDeviceInfo().getName().equals("Real Time Sequencer")) // and isn't made up Java bullshit.
+					{ 
+						tempDev.add(md); // we consider it valid and add it to our list.
 					}
 				}
 				catch (MidiUnavailableException e)
@@ -43,11 +64,11 @@ public final class MidiSweeper implements Runnable
 				}
 			}
 			
-			MidiHandler.updateDeviceList(tempDev);
-			tempDev.clear();
+			MidiHandler.updateDeviceList(tempDev); // we call the Handler to update the list
+			tempDev.clear(); //clear.
 			try
 			{
-				Thread.sleep(1000);
+				Thread.sleep(1000); // and sleep.
 			}
 			catch (InterruptedException e)
 			{

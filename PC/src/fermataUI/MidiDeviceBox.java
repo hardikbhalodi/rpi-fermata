@@ -143,8 +143,6 @@ public final class MidiDeviceBox extends JPanel
 			{
 				if (checkBox.isSelected())
 					MidiHandler.setActiveDevice((MidiDevice) comboBox.getSelectedItem());
-				
-				System.out.println("Combobox manipulated");
 			}
 			else if (e.getSource() == checkBox)
 			{
@@ -152,7 +150,6 @@ public final class MidiDeviceBox extends JPanel
 					MidiHandler.setActiveDevice((MidiDevice) comboBox.getSelectedItem());			
 				else
 					MidiHandler.setActiveDevice(null);
-						System.out.println("Checkbox manipulated");
 			}
 		}
 	}
