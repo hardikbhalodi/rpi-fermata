@@ -1,4 +1,4 @@
-package fermataMIDI;
+package fermata.midi;
 
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
