@@ -1,10 +1,10 @@
-package fermata.osc;
+package fermataPC.osc;
 
 import java.util.ArrayList;
 
 import com.illposed.osc.OSCMessage;
 
-import fermata.util.Coordinate;
+import fermataPC.util.Coordinate;
 
 /**
  * This class automates the process of making an OSCMessage to contain

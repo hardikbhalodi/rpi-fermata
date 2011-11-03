@@ -1,4 +1,4 @@
-package fermata.midi;
+package fermataPC.midi;
 
 import java.util.Vector;
 
@@ -6,7 +6,7 @@ import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Transmitter;
 
-import fermata.ui.MidiDeviceBox;
+import fermataPC.ui.MidiDeviceBox;
 
 
 /**

@@ -1,4 +1,4 @@
-package fermata.soundOut;
+package fermataPC.soundOut;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
