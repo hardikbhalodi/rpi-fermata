@@ -58,6 +58,21 @@ public abstract class OSCSender
 			e.printStackTrace();
 		}
 		
+		try
+		{
+			sender = new OSCPortOut();
+		}
+		catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (SocketException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		IP = localHost;
 		port = DEFAULT_PORT;
 		
