@@ -4,6 +4,7 @@ import javax.swing.UIManager;
 
 import fermataMIDI.MidiHandler;
 import fermataOSC.OSCSender;
+import fermataSOUNDOUT.LoadSoundFile;
 import fermataUI.FermataFrame;
 
 /**
@@ -32,8 +33,16 @@ public class Main
 		OSCSender.startOSCService(); //so OSC messages can be sent.
 		MidiHandler.startMIDIService(); // So MIDI events can be handled.
 		FermataFrame window = new FermataFrame(); // Creates the graphical
+		
 		// component of the software.
 		window.setVisible(true);
 		window.pack();
+		
+		
+		//Sound file playback
+		LoadSoundFile mp3 = new LoadSoundFile("/home/tyler/Desktop/BrainChild.mp3");
+        mp3.play();
+        
+        //System.out.println("here");
 	}
 }
