@@ -1,4 +1,4 @@
-package fermataUtil;
+package fermata.util;
 
 /**
  * This format will be used internally to represent a Coordinate such as

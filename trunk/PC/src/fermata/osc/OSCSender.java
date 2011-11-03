@@ -1,4 +1,4 @@
-package fermataOSC;
+package fermata.osc;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 import com.illposed.osc.OSCMessage;
 import com.illposed.osc.OSCPortOut;
 
-import fermataUtil.Coordinate;
+import fermata.util.Coordinate;
 
 /**
  * The OSCSender class exists to coordinate the sending of OSC messages
