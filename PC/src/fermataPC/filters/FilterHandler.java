@@ -12,6 +12,8 @@ public abstract class FilterHandler
 	
 	public static void startService()
 	{
+		availableFilters = new Vector<Filter>();
+		
 		//Add available filters here as we create them.
 		addFilter(new OSCFilter(0));
 		addFilter(new OSCFilter(1));
@@ -45,14 +47,17 @@ public abstract class FilterHandler
 		case 0:
 			deactivateFilter(xFilter);
 			xFilter = f;
+			//TODO more stuff.
 			break;
 		case 1:
 			deactivateFilter(yFilter);
 			yFilter = f;
+			//TODO more stuff
 			break;
 		case 2:
 			deactivateFilter(xFilter);
 			xFilter = yFilter = f;
+			//TODO more stuff.
 			break;
 		}
 	}
