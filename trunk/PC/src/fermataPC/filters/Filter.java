@@ -4,7 +4,7 @@ import fermataPC.util.Coordinate;
 
 public abstract class Filter
 {
-	private String name;
+	protected String name;
 	private int UID;
 	protected Coordinate coord;
 	
