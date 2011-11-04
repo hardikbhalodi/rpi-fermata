@@ -2,6 +2,7 @@ package fermataPC;
 
 import javax.swing.UIManager;
 
+import fermataPC.filters.FilterHandler;
 import fermataPC.midi.MidiHandler;
 import fermataPC.osc.OSCSender;
 import fermataPC.soundOut.LoadSoundFile;
@@ -30,9 +31,11 @@ public class Main
 			System.out.println("System L&F fail. Using default/cross-platform L&F");
 		}
 		
+		FilterHandler.startService(); //So things can be filtered.
 		OSCSender.startOSCService(); //so OSC messages can be sent.
 		MidiHandler.startMIDIService(); // So MIDI events can be handled.
 		FermataFrame window = new FermataFrame(); // Creates the graphical
+
 		
 		// component of the software.
 		window.setVisible(true);

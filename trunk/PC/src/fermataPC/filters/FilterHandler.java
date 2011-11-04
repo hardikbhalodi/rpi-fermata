@@ -1,10 +1,12 @@
 package fermataPC.filters;
 
-import java.util.ArrayList;
+import java.util.Vector;
+
+import fermataPC.util.Coordinate;
 
 public abstract class FilterHandler
 {
-	private static ArrayList<Filter> availableFilters;
+	private static Vector<Filter> availableFilters;
 	private static Filter xFilter;
 	private static Filter yFilter;
 	
@@ -14,7 +16,7 @@ public abstract class FilterHandler
 		addFilter(new OSCFilter(0));
 		addFilter(new OSCFilter(1));
 	
-		//
+		// Default filters are just OSC.
 		activateFilter(0);
 		activateFilter(1);
 	}
@@ -25,23 +27,49 @@ public abstract class FilterHandler
 		availableFilters.add(newFilter);
 	}
 	
-	public static void activateFilter(int UID)
+	public static void applyCoordinate(Coordinate coord)
+	{
+		if (coord.getFilterID() <= 0 && coord.getFilterID() < availableFilters.size())
+		{
+			availableFilters.get(coord.getFilterID()).setCoordinate(coord);
+			activateFilter(coord.getFilterID());
+		}
+	}
+	
+	private static void activateFilter(int UID)
 	{
 		Filter f = availableFilters.get(UID);
 		
 		switch (f.getAxes())
 		{
 		case 0:
+			deactivateFilter(xFilter);
 			xFilter = f;
 			break;
 		case 1:
+			deactivateFilter(yFilter);
 			yFilter = f;
 			break;
 		case 2:
+			deactivateFilter(xFilter);
 			xFilter = yFilter = f;
 			break;
 		}
 	}
 	
+	private static void deactivateFilter(Filter f)
+	{
+		//TODO
+	}
+	
+	public static Vector<Filter> getAvailableFilters()
+	{
+		return availableFilters;
+	}
+	
+	public static Filter getFilter(int UID)
+	{
+		return availableFilters.get(UID);
+	}
 	
 }

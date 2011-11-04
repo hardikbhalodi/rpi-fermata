@@ -1,8 +1,9 @@
 package fermataPC.filters;
 
+import fermataPC.osc.OSCSender;
+
 public class OSCFilter extends Filter
 {
-
 	private int axis;
 	
 	public OSCFilter(int axis)
@@ -19,8 +20,7 @@ public class OSCFilter extends Filter
 	@Override
 	public void filterStream()
 	{
-		// TODO Auto-generated method stub
-		
+		OSCSender.sendCoordinate(coord);
 	}
 
 	@Override
@@ -29,4 +29,6 @@ public class OSCFilter extends Filter
 		return 0;
 	}
 
+	
+	
 }
