@@ -37,10 +37,11 @@ public class FermataActivity extends Activity {
 	public static final int MESSAGE_WRITE = 3;
 	public static final int MESSAGE_DEVICE_NAME = 4;
 	public static final int MESSAGE_TOAST = 5;
-	public static final int MESSAGE_IP = 6;
+	public static final int MESSAGE_FILTER_LIST = 6;
 
 	// Key names received from the BluetoothCommandService Handler
 	public static final String DEVICE_NAME = "device_name";
+	public static final String FILTER_LIST = "filter_list";
 	public static final String TOAST = "toast";
 
 	// Name of the connected device
@@ -163,6 +164,9 @@ public class FermataActivity extends Activity {
 				case ConnectionService.STATE_LISTEN:
 				case ConnectionService.STATE_NONE:
 					mTitle.setText(R.string.title_not_connected);
+					break;
+				case ConnectionService.MESSAGE_FILTER_LIST:
+					
 					break;
 				}
 				break;
