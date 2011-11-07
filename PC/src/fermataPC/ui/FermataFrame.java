@@ -18,6 +18,7 @@ public class FermataFrame extends JFrame
 	private JMenu fermataMenu;
 	private MidiDeviceBox mdb;
 	private OSCSendBox osb;
+	private SelectSoundFileBox ssfb;
 	
 	private JPanel hostPane;
 	
@@ -46,6 +47,7 @@ public class FermataFrame extends JFrame
 		mdb = new MidiDeviceBox();
 		osb = new OSCSendBox();
 	//	mh = new MidiHandler(mdb);
+		ssfb = new SelectSoundFileBox();
 	}
 	
 	private void layoutFrame()
@@ -58,6 +60,7 @@ public class FermataFrame extends JFrame
 		
 		hostPane.add(mdb);
 		hostPane.add(osb);
+		hostPane.add(ssfb);
 	}
 	
 	private class MenuListener implements ActionListener
