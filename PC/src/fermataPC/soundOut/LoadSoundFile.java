@@ -1,10 +1,8 @@
 package fermataPC.soundOut;
 
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 
-import javax.swing.JFileChooser;
+import java.io.FileInputStream;
  
 import javazoom.jl.player.Player;
  
