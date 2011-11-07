@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Display;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.KeyEvent;
@@ -46,6 +47,9 @@ public class FermataActivity extends Activity {
 	public static final String DEVICE_NAME = "device_name";
 	public static final String FILTER_LIST = "filter_list";
 	public static final String TOAST = "toast";
+	
+	private int xfilter;
+	private int yfilter;
 
 	// Name of the connected device
 	private String mConnectedDeviceName = null;
@@ -53,7 +57,7 @@ public class FermataActivity extends Activity {
 	private BluetoothAdapter mBluetoothAdapter = null;
 	// Member object for Bluetooth Command Service
 	private ConnectionService mCommandService = null;
-	
+
 	private Menu optionsMenu;
 
 	/** Called when the activity is first created. */
@@ -61,6 +65,9 @@ public class FermataActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		xfilter = 0;
+		yfilter = 1;
+		
 		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.main);
@@ -70,14 +77,19 @@ public class FermataActivity extends Activity {
 		final View touchView = findViewById(R.id.touchView);
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
-		mTitle.setText(R.string.app_name);
+		mTitle.setText("Xfilter: " + xfilter +  " Yfilter: " + yfilter);
 		mTitle = (TextView) findViewById(R.id.title_right_text);
 		touchView.setOnTouchListener(new View.OnTouchListener() {
+			
+			Display display = getWindowManager().getDefaultDisplay(); 
+			int width = display.getWidth();
+			int height = display.getHeight();
+			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				String xcoord= String.valueOf((int)event.getX());
-				String ycoord= String.valueOf((int)event.getY());
-				String fullText = "x" + xcoord + "y" + ycoord;
+				String xcoord= String.valueOf((int)((double)(event.getX()/width) * 255));
+				String ycoord= String.valueOf((int)((double)(event.getY()/height) * 255));
+				String fullText = xfilter + "," + xcoord + ";" + yfilter + "," + ycoord;
 				textView.setText(fullText);
 				mCommandService.write(fullText);
 				return true;
@@ -187,7 +199,7 @@ public class FermataActivity extends Activity {
 			case MESSAGE_FILTER_LIST:
 				String name;
 				int uid, axis, default_value;
-				SubMenu filtersMenu = optionsMenu.addSubMenu(0, 0, 0, "change filters");
+				SubMenu filtersMenu = optionsMenu.addSubMenu(3, 0, 0, "Change Filters");
 				String filters[] =(msg.getData().getString(FILTER_LIST)).split(";");
 				for(int i = 0; i < filters.length; i++)
 				{
@@ -198,6 +210,7 @@ public class FermataActivity extends Activity {
 					filtersMenu.add(axis, uid, 0, name);
 				}
 				break;
+
 			}
 		}
 	};
@@ -274,6 +287,21 @@ public class FermataActivity extends Activity {
 			// Ensure this device is discoverable by others
 			ensureDiscoverable();
 			return true;
+		}
+
+		switch (item.getGroupId()) {
+		case 0:
+			xfilter = item.getItemId();
+			break;
+			
+		case 1:
+			yfilter = item.getItemId();
+			break;
+			
+		case 2:
+			xfilter = item.getItemId();
+			yfilter = item.getItemId();
+			break;
 		}
 		return false;
 	}
