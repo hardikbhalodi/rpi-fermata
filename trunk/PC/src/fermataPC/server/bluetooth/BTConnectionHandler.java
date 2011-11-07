@@ -13,17 +13,17 @@ import javax.microedition.io.StreamConnectionNotifier;
 public class BTConnectionHandler implements Runnable
 {
 	
-	private BlockingQueue<String> inbound;
-	private BlockingQueue<String> outbound;
+	private String[] inbound;
+	private String[] outbound;
 	private String greetingMessage;
 	
 	/**
 	 * Default constructor does not do anything 
 	 */
-	public BTConnectionHandler(BlockingQueue<String> inbound, BlockingQueue<String> outbound, String greetingMessage)
+	public BTConnectionHandler(String[] inbound2, String[] outbound2, String greetingMessage)
 	{
-		this.inbound = inbound;
-		this.outbound = outbound;
+		this.inbound = inbound2;
+		this.outbound = outbound2;
 		this.greetingMessage = greetingMessage;
 	}
 	

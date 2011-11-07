@@ -10,15 +10,15 @@ public class TcpConnectionHandler implements Runnable
 
 	public Vector<Thread> threads = new Vector<Thread>();
 	
-	private BlockingQueue<String> inbound;
-	private BlockingQueue<String> outbound;
+	private String[] inbound;
+	private String[] outbound;
 	private int port;
 	private String greetingMessage;
 
-	public TcpConnectionHandler(int port, BlockingQueue<String> inbound, BlockingQueue<String> outbound, String greetingMessage)
+	public TcpConnectionHandler(int port, String[] inbound2, String[] outbound2, String greetingMessage)
 	{
-		this.inbound = inbound;
-		this.outbound = outbound;
+		this.inbound = inbound2;
+		this.outbound = outbound2;
 		this.port = 9876;
 		this.greetingMessage = greetingMessage;
 	}
