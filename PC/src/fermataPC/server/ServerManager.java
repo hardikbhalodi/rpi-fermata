@@ -8,8 +8,8 @@ import fermataPC.server.tcp.TcpConnectionHandler;
 
 public class ServerManager
 {
-	private BlockingQueue<String> inbound;
-	private BlockingQueue<String> outbound;
+	private String[] inbound;
+	private String[] outbound; 
 	@SuppressWarnings("unused")
 	private ServerScanner servScan;
 	
@@ -18,8 +18,8 @@ public class ServerManager
 	
 	public ServerManager(int port, String greetingMessage)
 	{		
-		inbound = new LinkedBlockingQueue<String>();
-		outbound = new LinkedBlockingQueue<String>();
+		inbound  = new String[10];
+		outbound = new String[10];
 		
 		btConnectionHandler = new Thread(new BTConnectionHandler(inbound, outbound, greetingMessage));
 		btConnectionHandler.start();
@@ -31,18 +31,8 @@ public class ServerManager
 	}
 	
 	public String getTopInbound()
-	{
-		String temp = inbound.peek();
-		try
-		{
-			inbound.remove();
-		}
-		catch(Exception e)
-		{
-			return null;
-		}
-		
-		return temp;
+	{	
+		return inbound[0];
 	}
 	
 	public void sendStringAll(String message)
