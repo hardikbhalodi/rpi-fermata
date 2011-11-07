@@ -11,7 +11,6 @@ class TcpConnectionProcessor implements Runnable
 	private Socket socket;
 
 	private BlockingQueue<String> inbound;
-	private BlockingQueue<String> outbound;
 	private DataInputStream userInput;
 	private DataOutputStream output;
 
@@ -19,7 +18,6 @@ class TcpConnectionProcessor implements Runnable
 	{
 		this.socket = incoming_socket;
 		this.inbound = inbound;
-		this.outbound = outbound;
 
 		try
 		{

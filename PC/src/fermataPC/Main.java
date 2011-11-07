@@ -35,6 +35,7 @@ public class Main
 		OSCSender.startOSCService(); //so OSC messages can be sent.
 		MidiHandler.startMIDIService(); // So MIDI events can be handled.
 		
+		@SuppressWarnings("unused")
 		ServerManager sm = new ServerManager(9876, FilterHandler.generateFilterListString());
 		System.out.println("Filter List: \n" + FilterHandler.generateFilterListString());
 		
