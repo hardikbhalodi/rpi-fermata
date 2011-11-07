@@ -292,15 +292,19 @@ public class FermataActivity extends Activity {
 		switch (item.getGroupId()) {
 		case 0:
 			xfilter = item.getItemId();
+			mTitle.setText("Xfilter: " + xfilter +  " Yfilter: " + yfilter);
 			break;
 			
 		case 1:
 			yfilter = item.getItemId();
+			mTitle.setText("Xfilter: " + xfilter +  " Yfilter: " + yfilter);
 			break;
 			
 		case 2:
 			xfilter = item.getItemId();
 			yfilter = item.getItemId();
+			mTitle.setText("Xfilter: " + xfilter +  " Yfilter: " + yfilter);
+
 			break;
 		}
 		return false;
