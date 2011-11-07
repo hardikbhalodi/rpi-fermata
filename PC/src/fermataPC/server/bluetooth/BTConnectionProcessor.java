@@ -68,10 +68,17 @@ public class BTConnectionProcessor implements Runnable
 				// prepare to receive data
 				DataInputStream userInput = new DataInputStream(inputStream);
 				System.out.println("waiting for input");
-				String data;
+				String data = null;
 				while (true) 
 				{
-					data = userInput.readUTF();
+					try
+					{
+						data = userInput.readUTF();
+					}
+					catch (Exception e)
+					{
+						//TODO
+					}
 					inbound.add(data);
 				}
 			}
