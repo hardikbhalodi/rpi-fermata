@@ -29,7 +29,8 @@ public abstract class FilterHandler
 	
 	public static void applyCoordinate(Coordinate coord)
 	{
-		if (coord.getFilterID() >= 0 && coord.getFilterID() < availableFilters.size())
+		Integer filterID = coord.getFilterID();
+		if (filterID >= 0 && filterID < availableFilters.size())
 		{
 			availableFilters.get(coord.getFilterID()).setCoordinate(coord);
 			activateFilter(coord.getFilterID());

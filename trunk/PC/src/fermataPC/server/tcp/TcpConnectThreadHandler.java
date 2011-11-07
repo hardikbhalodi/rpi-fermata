@@ -10,14 +10,8 @@ class TcpConnectThreadHandler implements Runnable
 {
 	private Socket socket;
 
-	private BlockingQueue<byte []> inbound;
-	private BlockingQueue<byte []> outbound;
-
-
 	public TcpConnectThreadHandler(Socket incoming_socket, BlockingQueue<byte []> inbound, BlockingQueue<byte []> outbound){
 		this.socket = incoming_socket;
-		this.inbound = inbound;
-		this.outbound = outbound;
 	}
 
 	public void run()

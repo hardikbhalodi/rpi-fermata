@@ -12,8 +12,6 @@ public class BTConnectionProcessor implements Runnable
 {
 
 	private BlockingQueue<String> inbound;
-	private BlockingQueue<String> outbound;
-	private String greetingMessage;
 	private StreamConnection threadConnection;
 	/**
 	 * The constructor requires a given stream connection.
@@ -24,8 +22,6 @@ public class BTConnectionProcessor implements Runnable
 	{
 		threadConnection = connection;
 		this.inbound = inbound;
-		this.outbound = outbound;
-		this.greetingMessage = greetingMessage;
 
 		if(greetingMessage != null)
 		{
