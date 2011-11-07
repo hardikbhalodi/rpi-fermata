@@ -30,6 +30,6 @@ public class OSCFilter extends Filter
 	@Override
 	public String generateStringSummary()
 	{
-		return new String(name + "," + UID + "," + axis + "," + 0);
+		return new String(name + "," + UID + "," + axis + "," + 0 +",");
 	}
 }
