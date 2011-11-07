@@ -1,28 +1,36 @@
 package fermataPC.soundOut;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
+
+import javax.swing.JFileChooser;
  
 import javazoom.jl.player.Player;
  
-public class LoadSoundFile {
+public class LoadSoundFile 
+{
     private String filename;
     private Player player;
  
     // constructor that takes the name of an MP3 file
-    public LoadSoundFile(String filename) {
+    public LoadSoundFile(String filename) 
+    {
         this.filename = filename;
     }
  
     // play the MP3 file
-    public void play() {
-        try {
+    public void play() 
+    {
+        try 
+        {
             FileInputStream fis     = new FileInputStream(filename);
             BufferedInputStream bis = new BufferedInputStream(fis);
             player = new Player(bis);
             player.play();
         }
-        catch (Exception e) {
+        catch (Exception e) 
+        {
             System.out.println("Problem playing file " + filename);
             System.out.println(e);
         }

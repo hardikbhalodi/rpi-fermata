@@ -42,7 +42,7 @@ public class OSCSendBox extends JPanel
 		portField.setValue(OSCSender.DEFAULT_PORT);
 		
 		oscEnableBox = new JCheckBox("Enable OSC pass-through", false);
-		localHostBox = new JCheckBox("Use LocalHost", true);		
+		localHostBox = new JCheckBox("Use LocalHost", true);
 		
 		CustomListener cl = new CustomListener();
 		ipField.addActionListener(cl);
@@ -56,7 +56,7 @@ public class OSCSendBox extends JPanel
 	
 	public void layoutPanel()
 	{
-		this.setPreferredSize(new Dimension(400,100));
+		this.setPreferredSize(new Dimension(400,150));
 		
 		this.setLayout(new BorderLayout());
 		
@@ -71,7 +71,7 @@ public class OSCSendBox extends JPanel
 		portPane.add(new JLabel("OSC Port: "), BorderLayout.LINE_START);
 		portPane.add(portField, BorderLayout.PAGE_END);
 		
-		portPane.setPreferredSize(new Dimension(150,60));
+		portPane.setPreferredSize(new Dimension(150,100));
 		innerPane.add(portPane);
 		
 		JPanel ipPane = new JPanel();
@@ -81,7 +81,7 @@ public class OSCSendBox extends JPanel
 		ipPane.add(new JLabel("Enter IP: "), BorderLayout.LINE_START);
 		ipPane.add(ipField, BorderLayout.PAGE_END);
 		
-		ipPane.setPreferredSize(new Dimension(150,60));
+		ipPane.setPreferredSize(new Dimension(150,100));
 		
 		portField.setEnabled(false);
 		ipField.setEnabled(false);
