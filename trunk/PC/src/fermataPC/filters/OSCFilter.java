@@ -6,13 +6,8 @@ public class OSCFilter extends Filter
 	public OSCFilter(int axis)
 	{
 		super.axis = axis;
+		super.defaultValue = 0;
 		name = "OSC Pass-through ("+ (axis == 0 ? "x" : "y") + ")";
-	}
-	
-	@Override
-	public int getAxes()
-	{
-		return axis;
 	}
 
 	@Override
@@ -22,14 +17,8 @@ public class OSCFilter extends Filter
 	}
 
 	@Override
-	public int getDefaultValue()
-	{
-		return 0;
-	}
-
-	@Override
 	public String generateStringSummary()
 	{
-		return new String(name + "," + UID + "," + axis + "," + 0 +",");
+		return new String(name + "," + UID + "," + axis + "," + 0 +";");
 	}
 }

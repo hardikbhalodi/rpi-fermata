@@ -6,7 +6,6 @@ import fermataPC.filters.FilterHandler;
 import fermataPC.midi.MidiHandler;
 import fermataPC.osc.OSCSender;
 import fermataPC.server.ServerManager;
-import fermataPC.soundOut.LoadSoundFile;
 import fermataPC.ui.FermataFrame;
 
 /**
@@ -37,14 +36,12 @@ public class Main
 		MidiHandler.startMIDIService(); // So MIDI events can be handled.
 		
 		ServerManager sm = new ServerManager(9876, FilterHandler.generateFilterListString());
+		System.out.println("Filter List: \n" + FilterHandler.generateFilterListString());
 		
 		FermataFrame window = new FermataFrame(); // Creates the graphical
 
-		
 		// component of the software.
 		window.setVisible(true);
 		window.pack();
-        
-        //System.out.println("here");
 	}
 }

@@ -8,6 +8,7 @@ public abstract class Filter
 	protected int UID;
 	protected Coordinate coord;
 	protected int axis;
+	protected int defaultValue;
 	
 	public abstract String generateStringSummary();
 	
@@ -30,9 +31,10 @@ public abstract class Filter
 		this.coord = coord;
 	}
 	
-	public abstract int getAxes();
-	
-	public abstract int getDefaultValue();
+	public final int getAxes()
+	{
+		return axis;
+	}
 	
 	public abstract void filterStream();
 }
