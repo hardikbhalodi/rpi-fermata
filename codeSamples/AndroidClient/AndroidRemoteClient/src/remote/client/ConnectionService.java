@@ -44,6 +44,7 @@ public class ConnectionService {
 	public static final int STATE_LISTEN = 1;     // now listening for incoming connections
 	public static final int STATE_CONNECTING = 2; // now initiating an outgoing connection
 	public static final int STATE_CONNECTED = 3;  // now connected to a remote device
+	public static final int MESSAGE_FILTER_LIST = 4;
 
 	/**
 	 * Constructor. Prepares a new BluetoothChat session.
@@ -377,6 +378,20 @@ public class ConnectionService {
 			dataOut = new DataOutputStream(mmOutStream);
 			dataIn = new DataInputStream(mmInStream);
 			
+			Message msg = mHandler.obtainMessage(FermataActivity.MESSAGE_FILTER_LIST);
+			Bundle bundle = new Bundle();
+			try 
+			{
+				bundle.putString(FermataActivity.FILTER_LIST, dataIn.readUTF());
+			} 
+			catch (IOException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			msg.setData(bundle);
+			mHandler.sendMessage(msg);
+			
 		}
 
 		public ConnectedThread(BluetoothSocket socket) {
@@ -393,12 +408,30 @@ public class ConnectionService {
 				dataOut = new DataOutputStream(tmpOut);
 				dataIn = new DataInputStream(tmpIn);
 				
+				dataIn.readUTF();
+				
 			} catch (IOException e) {
 				Log.e(TAG, "temp sockets not created", e);
 			}
 
 			mmInStream = tmpIn;
 			mmOutStream = tmpOut;
+			dataOut = new DataOutputStream(mmOutStream);
+			dataIn = new DataInputStream(mmInStream);
+			
+			Message msg = mHandler.obtainMessage(FermataActivity.MESSAGE_FILTER_LIST);
+			Bundle bundle = new Bundle();
+			try 
+			{
+				bundle.putString(FermataActivity.FILTER_LIST, dataIn.readUTF());
+			} 
+			catch (IOException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			msg.setData(bundle);
+			mHandler.sendMessage(msg);
 			
 		}
 
