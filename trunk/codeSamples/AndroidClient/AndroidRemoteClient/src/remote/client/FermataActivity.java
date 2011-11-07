@@ -1,5 +1,6 @@
 package remote.client;
 
+import remote.client.R.menu;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -51,6 +53,8 @@ public class FermataActivity extends Activity {
 	private BluetoothAdapter mBluetoothAdapter = null;
 	// Member object for Bluetooth Command Service
 	private ConnectionService mCommandService = null;
+	
+	private Menu optionsMenu;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -181,7 +185,18 @@ public class FermataActivity extends Activity {
 				break;
 
 			case MESSAGE_FILTER_LIST:
-				Toast.makeText(getApplicationContext(), msg.getData().getString(FILTER_LIST), Toast.LENGTH_SHORT).show();
+				String name;
+				int uid, axis, default_value;
+				SubMenu filtersMenu = optionsMenu.addSubMenu(0, 0, 0, "change filters");
+				String filters[] =(msg.getData().getString(FILTER_LIST)).split(";");
+				for(int i = 0; i < filters.length; i++)
+				{
+					String specs[] = filters[i].split(",");
+					name=specs[0];
+					uid = Integer.parseInt(specs[1]);
+					axis = Integer.parseInt(specs[2]);
+					filtersMenu.add(axis, uid, 0, name);
+				}
 				break;
 			}
 		}
@@ -239,6 +254,7 @@ public class FermataActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.option_menu, menu);
+		optionsMenu = menu;
 		return true;
 	}
 

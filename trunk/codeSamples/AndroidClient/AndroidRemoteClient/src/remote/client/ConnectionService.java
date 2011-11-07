@@ -365,7 +365,7 @@ public class ConnectionService {
 			InputStream tmpIn = null;
 			OutputStream tmpOut = null;
 
-			// Get the BluetoothSocket input and output streams
+			// Get the TCPSocket input and output streams
 			try {
 				tmpIn = socket.getInputStream();
 				tmpOut = socket.getOutputStream();
@@ -399,17 +399,12 @@ public class ConnectionService {
 			mmSocket = socket;
 			mmTCPSocket = null;
 			InputStream tmpIn = null;
-			OutputStream tmpOut = null;
+			OutputStream tmpOut = null;			
 
 			// Get the BluetoothSocket input and output streams
 			try {
 				tmpIn = socket.getInputStream();
 				tmpOut = socket.getOutputStream();
-				dataOut = new DataOutputStream(tmpOut);
-				dataIn = new DataInputStream(tmpIn);
-				
-				dataIn.readUTF();
-				
 			} catch (IOException e) {
 				Log.e(TAG, "temp sockets not created", e);
 			}
@@ -432,6 +427,7 @@ public class ConnectionService {
 			}
 			msg.setData(bundle);
 			mHandler.sendMessage(msg);
+			
 			
 		}
 
