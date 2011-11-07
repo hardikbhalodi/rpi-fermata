@@ -8,33 +8,27 @@ public abstract class Filter
 	protected int UID;
 	protected Coordinate coord;
 	protected int axis;
-	protected int defaultValue;
 	
-	public abstract String generateStringSummary();
-	
-	public final String getName()
+
+	public final String generateStringSummary()
 	{
-		return name;
+		return new String(name + "," + UID + "," + axis +";");
 	}
-	
-	protected final void setUID(int UID)
-	{
-		this.UID = UID;
-	}
-	public final int getUID()
-	{
-		return UID;
-	}	
 	
 	public final void setCoordinate(Coordinate coord)
 	{
 		this.coord = coord;
 	}
 	
+	public abstract void filterStream();
+
 	public final int getAxes()
 	{
 		return axis;
 	}
-	
-	public abstract void filterStream();
+
+	public void setUID(int UID)
+	{
+		this.UID = UID;
+	}
 }
