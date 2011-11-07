@@ -11,17 +11,17 @@ import javax.microedition.io.StreamConnection;
 public class BTConnectionProcessor implements Runnable
 {
 
-	private BlockingQueue<String> inbound;
+	private String[] inbound;
 	private StreamConnection threadConnection;
 	/**
 	 * The constructor requires a given stream connection.
 	 * @param connection
 	 */
 
-	public BTConnectionProcessor(StreamConnection connection, BlockingQueue<String> inbound, BlockingQueue<String> outbound, String greetingMessage)
+	public BTConnectionProcessor(StreamConnection connection, String[] inbound2, String[] outbound, String greetingMessage)
 	{
 		threadConnection = connection;
-		this.inbound = inbound;
+		this.inbound = inbound2;
 
 		if(greetingMessage != null)
 		{
@@ -79,7 +79,7 @@ public class BTConnectionProcessor implements Runnable
 					{
 						//TODO
 					}
-					inbound.add(data);
+					inbound[0] = data;
 				}
 			}
 
