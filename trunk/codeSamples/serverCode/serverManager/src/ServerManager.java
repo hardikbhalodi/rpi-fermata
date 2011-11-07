@@ -5,26 +5,42 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ServerManager
 {
 
-	private BlockingQueue<byte []> inbound;
-	private BlockingQueue<byte []> outbound;
+	private BlockingQueue<String> inbound;
+	private BlockingQueue<String> outbound;
 	
-	public ServerManager()
+	Thread btConnectionHandler;
+	Thread tcpConnectionHandler;
+	
+	public ServerManager(int port, String greetingMessage)
 	{
-		inbound = new LinkedBlockingQueue();
-		outbound = new LinkedBlockingQueue();
+		inbound = new LinkedBlockingQueue<String>();
+		outbound = new LinkedBlockingQueue<String>();
 		
-		Thread btConnectionHandler = new Thread(new BTConnectionHandler(inbound, outbound));
+		btConnectionHandler = new Thread(new BTConnectionHandler(inbound, outbound, greetingMessage));
 		btConnectionHandler.start();
 		
-		Thread tcpConnectionHandler = new Thread(new TcpConnectionHandler(9876, inbound, outbound));
+		tcpConnectionHandler = new Thread(new TcpConnectionHandler(port, inbound, outbound, greetingMessage));
 		tcpConnectionHandler.start();
 	}
 	
-	public byte[] getTopInbound()
+	public String getTopInbound()
 	{
-		byte[] temp = inbound.peek();
-		inbound.remove();
+		String temp = inbound.peek();
+		try
+		{
+			inbound.remove();
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+		
 		return temp;
+	}
+	
+	public void sendStringAll(String message)
+	{
+		
 	}
 	
 }
