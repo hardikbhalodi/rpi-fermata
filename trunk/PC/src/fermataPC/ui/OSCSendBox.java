@@ -149,7 +149,19 @@ public class OSCSendBox extends JPanel
 				}
 			}			
 			else if (e.getSource() == localHostBox)
-				ipField.setEnabled(!localHostBox.isSelected());
+			{
+				Boolean useLocalHost = localHostBox.isSelected();
+				ipField.setEnabled(!useLocalHost);
+				
+				if (useLocalHost)
+				{
+					OSCSender.setIP("localhost");
+				}
+				else
+				{
+					ipField.setText(OSCSender.setIP(ipField.getText()));
+				}
+			}
 			else if (e.getSource() == portField)
 				portChanged();
 			else if (e.getSource() == ipField)
