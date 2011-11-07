@@ -44,7 +44,7 @@ public class FermataFrame extends JFrame
 		fermataExit.addActionListener(listen);
 		
 		mdb = new MidiDeviceBox();
-		osb = new OSCSendBox(); //TODO initialize elsewhere, store it. It'll come up again.
+		osb = new OSCSendBox();
 	//	mh = new MidiHandler(mdb);
 	}
 	

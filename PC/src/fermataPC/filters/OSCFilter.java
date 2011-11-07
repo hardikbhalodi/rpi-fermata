@@ -1,14 +1,11 @@
 package fermataPC.filters;
 
-import fermataPC.osc.OSCSender;
-
 public class OSCFilter extends Filter
 {
-	private int axis;
 	
 	public OSCFilter(int axis)
 	{
-		this.axis = axis;
+		super.axis = axis;
 		name = "OSC Pass-through ("+ (axis == 0 ? "x" : "y") + ")";
 	}
 	
@@ -21,7 +18,7 @@ public class OSCFilter extends Filter
 	@Override
 	public void filterStream()
 	{
-		OSCSender.sendCoordinate(coord);
+		//TODO anything.
 	}
 
 	@Override
@@ -30,6 +27,9 @@ public class OSCFilter extends Filter
 		return 0;
 	}
 
-	
-	
+	@Override
+	public String generateStringSummary()
+	{
+		return new String(name + "," + UID + "," + axis + "," + 0);
+	}
 }
