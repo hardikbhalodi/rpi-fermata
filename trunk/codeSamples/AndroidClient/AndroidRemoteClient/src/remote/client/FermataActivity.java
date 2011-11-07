@@ -166,12 +166,8 @@ public class FermataActivity extends Activity {
 				case ConnectionService.STATE_NONE:
 					mTitle.setText(R.string.title_not_connected);
 					break;
-				case ConnectionService.MESSAGE_FILTER_LIST:
-					
-					break;
 				}
 				break;
-
 			case MESSAGE_DEVICE_NAME:
 				// save the connected device's name
 				Log.v("FermataDebug", "Setting the device name to: " + msg.getData().getString(DEVICE_NAME));
@@ -182,6 +178,10 @@ public class FermataActivity extends Activity {
 			case MESSAGE_TOAST:
 				Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
 						Toast.LENGTH_SHORT).show();
+				break;
+
+			case MESSAGE_FILTER_LIST:
+				Toast.makeText(getApplicationContext(), msg.getData().getString(FILTER_LIST), Toast.LENGTH_SHORT).show();
 				break;
 			}
 		}
