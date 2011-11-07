@@ -10,14 +10,14 @@ class TcpConnectionProcessor implements Runnable
 {
 	private Socket socket;
 
-	private BlockingQueue<String> inbound;
+	private String[] inbound;
 	private DataInputStream userInput;
 	private DataOutputStream output;
 
-	public TcpConnectionProcessor(Socket incoming_socket, BlockingQueue<String> inbound, BlockingQueue<String> outbound, String greetingMessage)
+	public TcpConnectionProcessor(Socket incoming_socket, String[] inbound2, String[] outbound, String greetingMessage)
 	{
 		this.socket = incoming_socket;
-		this.inbound = inbound;
+		this.inbound = inbound2;
 
 		try
 		{
@@ -49,7 +49,7 @@ class TcpConnectionProcessor implements Runnable
 			while (true) 
 			{
 				data = userInput.readUTF();
-				inbound.add(data);
+				inbound[0] = data;
 			}
 
 		}

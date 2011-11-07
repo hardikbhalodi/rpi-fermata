@@ -29,7 +29,7 @@ public class ServerScanner implements Runnable
 			{
 				parseMessage(temp);
 			}
-			/*
+			
 			try
 			{
 				Thread.sleep(20);
@@ -37,7 +37,7 @@ public class ServerScanner implements Runnable
 			catch (InterruptedException e)
 			{
 				e.printStackTrace();
-			}	/**/	
+			}	
 		}
 	}
 	

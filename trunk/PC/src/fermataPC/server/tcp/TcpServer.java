@@ -7,7 +7,7 @@ public class TcpServer
 {
 	TcpConnectionHandler connectionHandler;
 	
-	public TcpServer(BlockingQueue<String> inbound, BlockingQueue<String> outbound, String greetingMessage) 
+	public TcpServer(String[] inbound, String[] outbound, String greetingMessage) 
 	{
 		connectionHandler = new TcpConnectionHandler(9876, inbound, outbound, greetingMessage);
 	}
