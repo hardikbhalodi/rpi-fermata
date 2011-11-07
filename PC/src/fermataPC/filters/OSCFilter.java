@@ -1,5 +1,8 @@
 package fermataPC.filters;
 
+import fermataPC.osc.OSCSender;
+import fermataPC.util.Coordinate;
+
 public class OSCFilter extends Filter
 {
 	
@@ -12,6 +15,12 @@ public class OSCFilter extends Filter
 	@Override
 	public void filterStream()
 	{
-		//TODO anything.
+		//we actually don't do any filtering with OSC pass-through.
+	}
+
+	@Override
+	public void setCoordinate(Coordinate coord)
+	{
+		OSCSender.sendCoordinate(coord);
 	}
 }

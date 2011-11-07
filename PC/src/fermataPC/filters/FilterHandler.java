@@ -23,7 +23,8 @@ public abstract class FilterHandler
 	
 	private static void addFilter(Filter newFilter)
 	{
-		newFilter.setUID(availableFilters.size());
+		Integer newUID = availableFilters.size();
+		newFilter.setUID(newUID);
 		availableFilters.add(newFilter);
 	}
 	
@@ -32,23 +33,26 @@ public abstract class FilterHandler
 		Integer filterID = coord.getFilterID();
 		if (filterID >= 0 && filterID < availableFilters.size())
 		{
-			availableFilters.get(coord.getFilterID()).setCoordinate(coord);
+			Filter f = availableFilters.get(filterID);
+			f.setCoordinate(coord);
 			activateFilter(coord.getFilterID());
 		}
 	}
 	
 	private static void activateFilter(int UID)
 	{
-		FilterProcessor.activateFilter(availableFilters.get(UID));
+		Filter f = availableFilters.get(UID);
+		FilterProcessor.activateFilter(f);
 	}
 	
 	public static String generateFilterListString()
 	{
-		StringBuffer bf = new StringBuffer();
+		StringBuffer filterList = new StringBuffer();
 		for (Filter f : availableFilters)
 		{
-			bf.append(f.generateStringSummary());
+			String sum = f.generateStringSummary();
+			filterList.append(sum);
 		}
-		return bf.toString();
+		return filterList.toString();
 	}
 }

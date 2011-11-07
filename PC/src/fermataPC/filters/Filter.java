@@ -15,10 +15,7 @@ public abstract class Filter
 		return new String(name + "," + UID + "," + axis +";");
 	}
 	
-	public final void setCoordinate(Coordinate coord)
-	{
-		this.coord = coord;
-	}
+	public abstract void setCoordinate(Coordinate coord);
 	
 	public abstract void filterStream();
 
