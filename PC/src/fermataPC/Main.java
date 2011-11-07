@@ -5,6 +5,7 @@ import javax.swing.UIManager;
 import fermataPC.filters.FilterHandler;
 import fermataPC.midi.MidiHandler;
 import fermataPC.osc.OSCSender;
+import fermataPC.server.ServerManager;
 import fermataPC.soundOut.LoadSoundFile;
 import fermataPC.ui.FermataFrame;
 
@@ -34,17 +35,15 @@ public class Main
 		FilterHandler.startService(); //So things can be filtered.
 		OSCSender.startOSCService(); //so OSC messages can be sent.
 		MidiHandler.startMIDIService(); // So MIDI events can be handled.
+		
+		ServerManager sm = new ServerManager(9876, FilterHandler.generateFilterListString());
+		
 		FermataFrame window = new FermataFrame(); // Creates the graphical
 
 		
 		// component of the software.
 		window.setVisible(true);
 		window.pack();
-		
-		
-		//Sound file playback
-		LoadSoundFile mp3 = new LoadSoundFile("/home/tyler/Desktop/BrainChild.mp3");
-        mp3.play();
         
         //System.out.println("here");
 	}
