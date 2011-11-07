@@ -5,8 +5,11 @@ import fermataPC.util.Coordinate;
 public abstract class Filter
 {
 	protected String name;
-	private int UID;
+	protected int UID;
 	protected Coordinate coord;
+	protected int axis;
+	
+	public abstract String generateStringSummary();
 	
 	public final String getName()
 	{

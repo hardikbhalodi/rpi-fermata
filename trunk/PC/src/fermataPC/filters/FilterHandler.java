@@ -7,8 +7,6 @@ import fermataPC.util.Coordinate;
 public abstract class FilterHandler
 {
 	private static Vector<Filter> availableFilters;
-	private static Filter xFilter;
-	private static Filter yFilter;
 	
 	public static void startService()
 	{
@@ -31,7 +29,7 @@ public abstract class FilterHandler
 	
 	public static void applyCoordinate(Coordinate coord)
 	{
-		if (coord.getFilterID() <= 0 && coord.getFilterID() < availableFilters.size())
+		if (coord.getFilterID() >= 0 && coord.getFilterID() < availableFilters.size())
 		{
 			availableFilters.get(coord.getFilterID()).setCoordinate(coord);
 			activateFilter(coord.getFilterID());
@@ -40,41 +38,16 @@ public abstract class FilterHandler
 	
 	private static void activateFilter(int UID)
 	{
-		Filter f = availableFilters.get(UID);
-		
-		switch (f.getAxes())
+		FilterProcessor.activateFilter(availableFilters.get(UID));
+	}
+	
+	public static String generateFilterListString()
+	{
+		StringBuffer bf = new StringBuffer();
+		for (Filter f : availableFilters)
 		{
-		case 0:
-			deactivateFilter(xFilter);
-			xFilter = f;
-			//TODO more stuff.
-			break;
-		case 1:
-			deactivateFilter(yFilter);
-			yFilter = f;
-			//TODO more stuff
-			break;
-		case 2:
-			deactivateFilter(xFilter);
-			xFilter = yFilter = f;
-			//TODO more stuff.
-			break;
+			bf.append(f.generateStringSummary());
 		}
+		return bf.toString();
 	}
-	
-	private static void deactivateFilter(Filter f)
-	{
-		//TODO
-	}
-	
-	public static Vector<Filter> getAvailableFilters()
-	{
-		return availableFilters;
-	}
-	
-	public static Filter getFilter(int UID)
-	{
-		return availableFilters.get(UID);
-	}
-	
 }
