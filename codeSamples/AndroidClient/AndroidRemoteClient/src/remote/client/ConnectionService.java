@@ -111,6 +111,12 @@ public class ConnectionService {
 		setState(STATE_CONNECTING);
 	}
 
+	/**
+	 * Start the ConnectedThread to begin managing the TCP/IP connection 
+	 * @param ip The IP address of the server
+	 * @param port The port of the server
+	 */
+	
 	public synchronized void connect(String ip, int port) {
 
 		Bundle bundle = new Bundle();
@@ -370,6 +376,7 @@ public class ConnectionService {
 			mmOutStream = tmpOut;
 			dataOut = new DataOutputStream(mmOutStream);
 			dataIn = new DataInputStream(mmInStream);
+			
 		}
 
 		public ConnectedThread(BluetoothSocket socket) {
@@ -383,12 +390,16 @@ public class ConnectionService {
 			try {
 				tmpIn = socket.getInputStream();
 				tmpOut = socket.getOutputStream();
+				dataOut = new DataOutputStream(tmpOut);
+				dataIn = new DataInputStream(tmpIn);
+				
 			} catch (IOException e) {
 				Log.e(TAG, "temp sockets not created", e);
 			}
 
 			mmInStream = tmpIn;
 			mmOutStream = tmpOut;
+			
 		}
 
 		public void run() {

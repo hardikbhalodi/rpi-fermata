@@ -6,11 +6,12 @@ import java.util.concurrent.BlockingQueue;
  *
  */
 
-public class BluetoothServer {
+public class BluetoothServer
+{
 
-	public BluetoothServer(BlockingQueue<byte []> inbound, BlockingQueue<byte []> outbound)
+	public BluetoothServer(BlockingQueue<String> inbound, BlockingQueue<String> outbound, String greetingMessage)
 	{
-		Thread connectionHandler = new Thread(new BTConnectionHandler(inbound, outbound));
+		Thread connectionHandler = new Thread(new BTConnectionHandler(inbound, outbound, greetingMessage));
 		connectionHandler.start();
 	}
 

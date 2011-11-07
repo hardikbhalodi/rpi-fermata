@@ -11,17 +11,18 @@ import javax.microedition.io.StreamConnectionNotifier;
 public class BTConnectionHandler implements Runnable
 {
 	
-	private BlockingQueue<byte []> inbound;
-	private BlockingQueue<byte []> outbound;
-	
+	private BlockingQueue<String> inbound;
+	private BlockingQueue<String> outbound;
+	private String greetingMessage;
 	
 	/**
 	 * Default constructor does not do anything 
 	 */
-	public BTConnectionHandler(BlockingQueue<byte []> inbound, BlockingQueue<byte []> outbound)
+	public BTConnectionHandler(BlockingQueue<String> inbound, BlockingQueue<String> outbound, String greetingMessage)
 	{
 		this.inbound = inbound;
 		this.outbound = outbound;
+		this.greetingMessage = greetingMessage;
 	}
 	
 	/**
@@ -62,9 +63,9 @@ public class BTConnectionHandler implements Runnable
 				System.out.println("waiting for connection...");
 	                  	connection = notifier.acceptAndOpen();
 
-	             System.out.println("connection established, spawning thread");
+	             System.out.println("connection established.");
 	                  	
-				Thread connectionProcessor = new Thread(new BTConnectionProcessor(connection));
+				Thread connectionProcessor = new Thread(new BTConnectionProcessor(connection, inbound, outbound, greetingMessage));
 				connectionProcessor.start();
 			} catch (Exception e) {
 				e.printStackTrace();

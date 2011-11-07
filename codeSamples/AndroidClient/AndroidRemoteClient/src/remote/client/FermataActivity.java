@@ -71,24 +71,8 @@ public class FermataActivity extends Activity {
 			public boolean onTouch(View v, MotionEvent event) {
 				String xcoord= String.valueOf((int)event.getX());
 				String ycoord= String.valueOf((int)event.getY());
-
-				if (xcoord.length()<3){
-					if (xcoord.length()<2){
-						xcoord="0"+xcoord;
-					}
-					xcoord="0"+xcoord;
-
-				}
-				if (ycoord.length()<3){
-					if (ycoord.length()<2){
-						ycoord="0"+xcoord;
-					}
-					ycoord="0"+ycoord;
-
-				}
 				String fullText = "x" + xcoord + "y" + ycoord;
 				textView.setText(fullText);
-
 				mCommandService.write(fullText);
 				return true;
 			}
