@@ -10,12 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class IPConnectActivity extends Activity {
+public class IPConnectActivity extends Activity 
+{
 	
 	public static String IP_ADDRESS = "ip_address";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         // Setup the window
@@ -27,8 +29,10 @@ public class IPConnectActivity extends Activity {
 
         // Initialize the button to perform device discovery
         Button ipButton = (Button) findViewById(R.id.button_IP_accept);
-        ipButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
+        ipButton.setOnClickListener(new OnClickListener() 
+        {
+            public void onClick(View v) 
+            {
             	
                 EditText ipfield = (EditText)findViewById(R.id.ipconnect);
                 String ip = ipfield.getText().toString();
