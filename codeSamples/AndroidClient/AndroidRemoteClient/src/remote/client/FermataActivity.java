@@ -24,7 +24,8 @@ import android.widget.Toast;
 import android.view.MotionEvent;
 
 
-public class FermataActivity extends Activity {
+public class FermataActivity extends Activity
+{
 
 	// Layout view
 	private TextView mTitle;
@@ -62,7 +63,8 @@ public class FermataActivity extends Activity {
 
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		xfilter = 0;
@@ -99,7 +101,8 @@ public class FermataActivity extends Activity {
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 		// If the adapter is null, then Bluetooth is not supported
-		if (mBluetoothAdapter == null) {
+		if (mBluetoothAdapter == null)
+		{
 			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
 			finish();
 			return;
@@ -107,37 +110,44 @@ public class FermataActivity extends Activity {
 	}
 
 	@Override
-	protected void onStart() {
+	protected void onStart()
+	{
 		super.onStart();
 
 		// If BT is not on, request that it be enabled.
 		// setupCommand() will then be called during onActivityResult
-		if (!mBluetoothAdapter.isEnabled()) {
+		if (!mBluetoothAdapter.isEnabled()) 
+		{
 			Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 		}
 		// otherwise set up the command service
-		else {
+		else
+		{
 			if (mCommandService==null)
 				setupCommand();
 		}
 	}
 
 	@Override
-	protected void onResume() {
+	protected void onResume()
+	{
 		super.onResume();
 
 		// Performing this check in onResume() covers the case in which BT was
 		// not enabled during onStart(), so we were paused to enable it...
 		// onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
-		if (mCommandService != null) {
-			if (mCommandService.getState() == ConnectionService.STATE_NONE) {
+		if (mCommandService != null)
+		{
+			if (mCommandService.getState() == ConnectionService.STATE_NONE) 
+			{
 				mCommandService.start();
 			}
 		}
 	}
 
-	private void setupCommand() {
+	private void setupCommand()
+	{
 		// Initialize the BluetoothChatService to perform bluetooth connections
 		mCommandService = new ConnectionService(this, mHandler);
 		String message = "guh";
@@ -148,16 +158,19 @@ public class FermataActivity extends Activity {
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy() 
+	{
 		super.onDestroy();
 
 		if (mCommandService != null)
 			mCommandService.stop();
 	}
 
-	private void ensureDiscoverable() {
+	private void ensureDiscoverable() 
+	{
 		if (mBluetoothAdapter.getScanMode() !=
-				BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+				BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) 
+		{
 			Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 			discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
 			startActivity(discoverableIntent);
@@ -165,12 +178,15 @@ public class FermataActivity extends Activity {
 	}
 
 	// The Handler that gets information back from the ConnectionService
-	private final Handler mHandler = new Handler() {
+	private final Handler mHandler = new Handler()
+	{
 		@Override
-		public void handleMessage(Message msg) {
+		public void handleMessage(Message msg)
+		{
 			switch (msg.what) {
 			case MESSAGE_STATE_CHANGE:
-				switch (msg.arg1) {
+				switch (msg.arg1)
+				{
 				case ConnectionService.STATE_CONNECTED:
 					mTitle.setText(R.string.title_connected_to);
 					mTitle.append(mConnectedDeviceName);
@@ -215,11 +231,14 @@ public class FermataActivity extends Activity {
 		}
 	};
 
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		switch (requestCode)
+		{
 		case REQUEST_CONNECT_DEVICE:
 			// When DeviceListActivity returns with a device to connect
-			if (resultCode == Activity.RESULT_OK) {
+			if (resultCode == Activity.RESULT_OK) 
+			{
 				// Get the device MAC address
 				String address = data.getExtras()
 						.getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
@@ -231,10 +250,13 @@ public class FermataActivity extends Activity {
 			break;
 		case REQUEST_ENABLE_BT:
 			// When the request to enable Bluetooth returns
-			if (resultCode == Activity.RESULT_OK) {
+			if (resultCode == Activity.RESULT_OK)
+			{
 				// Bluetooth is now enabled, so set up a chat session
 				setupCommand();
-			} else {
+			}
+			else
+			{
 				// User did not enable Bluetooth or an error occured
 				Toast.makeText(this, R.string.bt_not_enabled_leaving, Toast.LENGTH_SHORT).show();
 				finish();
@@ -243,7 +265,8 @@ public class FermataActivity extends Activity {
 
 		case REQUEST_IP_CONNECT:
 			//If the result from the IP connection activity is okay
-			if(resultCode == Activity.RESULT_OK) {
+			if(resultCode == Activity.RESULT_OK)
+			{
 
 				//Parse out the IP and port and pass it along to the connect thread to make 
 				//and setup the connection
@@ -264,7 +287,8 @@ public class FermataActivity extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.option_menu, menu);
 		optionsMenu = menu;
@@ -272,8 +296,10 @@ public class FermataActivity extends Activity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
 		case R.id.ipconnect:
 			Intent ipIntent = new Intent(this, IPConnectActivity.class);
 			startActivityForResult(ipIntent, REQUEST_IP_CONNECT);
@@ -289,7 +315,10 @@ public class FermataActivity extends Activity {
 			return true;
 		}
 
-		switch (item.getGroupId()) {
+		mTitle = (TextView) findViewById(R.id.title_left_text);
+		
+		switch (item.getGroupId())
+		{
 		case 0:
 			xfilter = item.getItemId();
 			mTitle.setText("Xfilter: " + xfilter +  " Yfilter: " + yfilter);
