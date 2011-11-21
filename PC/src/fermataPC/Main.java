@@ -6,6 +6,8 @@ import fermataPC.filters.FilterHandler;
 import fermataPC.midi.MidiHandler;
 import fermataPC.osc.OSCSender;
 import fermataPC.server.ServerManager;
+import fermataPC.soundOut.midiPlayer;
+import fermataPC.soundOut.debug.DummyMIDISender;
 import fermataPC.ui.FermataFrame;
 
 /**
@@ -31,6 +33,8 @@ public class Main
 			System.out.println("System L&F fail. Using default/cross-platform L&F");
 		}
 		
+		
+		midiPlayer mp = new midiPlayer();
 		FilterHandler.startService(); //So things can be filtered.
 		OSCSender.startOSCService(); //so OSC messages can be sent.
 		MidiHandler.startMIDIService(); // So MIDI events can be handled.
@@ -40,7 +44,8 @@ public class Main
 		System.out.println("Filter List: \n" + FilterHandler.generateFilterListString());
 		
 		FermataFrame window = new FermataFrame(); // Creates the graphical
-
+		
+		//DummyMIDISender dms = new DummyMIDISender();
 		// component of the software.
 		window.setVisible(true);
 		window.pack();
