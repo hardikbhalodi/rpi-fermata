@@ -1,8 +1,5 @@
 package fermataPC.server;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
 import fermataPC.server.bluetooth.BTConnectionHandler;
 import fermataPC.server.tcp.TcpConnectionHandler;
 

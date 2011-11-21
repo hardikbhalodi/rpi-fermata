@@ -15,7 +15,8 @@ public class OSCFilter extends Filter
 	@Override
 	public void filterStream()
 	{
-		//we actually don't do any filtering with OSC pass-through.
+		//we actually don't do any filtering with OSC pass-through, so this does
+		// absolutely nothing.
 	}
 
 	@Override

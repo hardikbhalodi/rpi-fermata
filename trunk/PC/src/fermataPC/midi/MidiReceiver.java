@@ -3,6 +3,8 @@ package fermataPC.midi;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
 
+import fermataPC.soundOut.midiPlayer;
+
 /**
  * The MidiReceiver deals with messages from whatever transmitter is currently
  * active.
@@ -53,9 +55,11 @@ public final class MidiReceiver implements Receiver
 		{
 		case 8: // Note off command; data1 is note.
 			System.out.println("Note off:" + data1);
+			midiPlayer.noteOff(data1, data2);
 			break;
 		case 9: // note on command; data 1 is note, data 2 is velocity.
 			System.out.println("Note on: " + data1 + "; Velocity: " + data2);
+			midiPlayer.noteOn(data1 , data2);
 			break;
 		case 10: // aftertouch (velocity changes). data 1 is the note; data 2
 			// is the new velocity. We will likely not support this.

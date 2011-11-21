@@ -1,7 +1,5 @@
 package fermataPC.server.bluetooth;
 
-import java.util.concurrent.BlockingQueue;
-
 import javax.bluetooth.DiscoveryAgent;
 import javax.bluetooth.LocalDevice;
 import javax.bluetooth.UUID;

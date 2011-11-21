@@ -1,6 +1,5 @@
 package fermataPC.server.bluetooth;
 
-import java.util.concurrent.BlockingQueue;
 
 /**
  * A class to implement a threaded bluetoothServer

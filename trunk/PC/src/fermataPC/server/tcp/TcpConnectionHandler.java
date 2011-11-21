@@ -3,7 +3,6 @@ package fermataPC.server.tcp;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.util.concurrent.BlockingQueue;
 
 public class TcpConnectionHandler implements Runnable
 {
@@ -45,7 +44,6 @@ public class TcpConnectionHandler implements Runnable
 				threads.add(thread);
 				thread.start();
 			}
-
 		}
 		catch ( IOException ex )
 		{
