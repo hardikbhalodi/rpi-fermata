@@ -19,7 +19,7 @@ public final class MidiReceiver implements Receiver
 	@Override
 	public void close()
 	{
-		//TODO: link to synth.
+		midiPlayer.silence();
 		System.out.println("Active MIDI disconnected/disabled");
 	}
 
@@ -48,36 +48,43 @@ public final class MidiReceiver implements Receiver
 		// applied to.
 		
 		Byte command = (byte) ((status >> 4) & 15); // isolating the command
-		Byte chan = (byte) (status & 15); // isolating the channel;
+	//	Byte chan = (byte) (status & 15); // isolating the channel;
 
-		System.out.println("Command: " + command + "; Channel: " + chan + "; Data 1: " + data1 + "; Data 2: " + data2);
+	//	System.out.println("Command: " + command + "; Channel: " + chan + "; Data 1: " + data1 + "; Data 2: " + data2);
 		switch (command)
 		{
 		case 8: // Note off command; data1 is note.
-			System.out.println("Note off:" + data1);
+	//		System.out.println("Note off:" + data1);
 			midiPlayer.noteOff(data1, data2);
 			break;
 		case 9: // note on command; data 1 is note, data 2 is velocity.
-			System.out.println("Note on: " + data1 + "; Velocity: " + data2);
+	//		System.out.println("Note on: " + data1 + "; Velocity: " + data2);
 			midiPlayer.noteOn(data1 , data2);
 			break;
 		case 10: // aftertouch (velocity changes). data 1 is the note; data 2
 			// is the new velocity. We will likely not support this.
-			System.out.println("Aftertouch? Pfft.");
+	//		System.out.println("Aftertouch? Pfft.");
 			break;
-		case 11:  // we will definitely not support this.
-			System.out.println("Channel property change.");
+		case 11:  // sustain on/sustain off
+			if (data1 == 64)
+			{
+				if (data2 == 127)
+					midiPlayer.sustainOn();
+				else if (data2 == 0)
+					midiPlayer.sustainOff();
+			}
+	//		System.out.println("Channel property change.");
 			break;
 		case 13:  // we will definitely not support this.
-			System.out.println("Channel aftertouch.");
+	//		System.out.println("Channel aftertouch.");
 			break;
 		case 14:  // we will definitely not support this.
-			System.out.println("Pitch wheel change");
+	//		System.out.println("Pitch wheel change");
 			break;
 		default:
 			break;
 		}
 		
-		System.out.println();
+	//	System.out.println();
 	}
 }
