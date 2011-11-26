@@ -7,19 +7,23 @@ import fermataPC.util.Coordinate;
 public abstract class FilterHandler
 {
 	private static Vector<Filter> availableFilters;
-	
+	private static FilterProcessor fp;
 	/**
 	 * This starts the FilterHandler neatly, giving it
 	 * filters to play with and handling activation of defaults.
 	 */
 	public static void startService()
 	{
-		availableFilters = new Vector<Filter>();
+		availableFilters = new Vector<Filter>();	
+		fp = FilterProcessor.getFilterProcessor();
 		
 		//Add available filters here as we create them.
-		addFilter(new OSCFilter(0));
-		addFilter(new OSCFilter(1));
+		addFilter(new OSCFilter(0, 1));
+		addFilter(new OSCFilter(1, 1));
 	
+		addFilter(new BandPassFilter(0));
+		addFilter(new BandPassFilter(1));
+		
 		// Default filters are just OSC filters on x and y axes.
 		activateFilter(0);
 		activateFilter(1);
@@ -67,7 +71,7 @@ public abstract class FilterHandler
 		//The UID is just the filter's index in the list; that's how the
 		// UID was assigned.
 		Filter f = availableFilters.get(UID);
-		FilterProcessor.activateFilter(f);
+		fp.activateFilter(f);
 	}
 	
 	/**
