@@ -57,8 +57,8 @@ public class ServerScanner implements Runnable
 		Coordinate c2 = new Coordinate(UID2, scalar2);
 		
 		FilterHandler.applyCoordinate(c1);
-		FilterHandler.applyCoordinate(c2);		
+		FilterHandler.applyCoordinate(c2);	
 		
-		System.out.println("UID1: " + UID1 + "; scalar: " + scalar1 + ";UID2: " + UID2 + "; scalar: " + scalar2);
+	//	System.out.println("UID1: " + UID1 + "; scalar: " + scalar1 + ";UID2: " + UID2 + "; scalar: " + scalar2);
 	}
 }
