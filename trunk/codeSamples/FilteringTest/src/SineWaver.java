@@ -28,10 +28,12 @@ public class SineWaver
 		
 		FilterBandPass bpf = new FilterBandPass();
 		synth.add(bpf);
+	//	bpf.amplitude.set(.5);
 		
 		// Add an output mixer.
 		synth.add( lineOut = new LineOut());
 
+		sinwaver.frequency.set(440);
 		sinwaver.output.connect(0, bpf.input, 0);
 			
 		lfo.frequency.set(.25);

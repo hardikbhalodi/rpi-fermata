@@ -24,9 +24,15 @@ public abstract class FilterHandler
 		addFilter(new BandPassFilter(0));
 		addFilter(new BandPassFilter(1));
 		
+		addFilter(new HiPassFilter(0));
+		addFilter(new HiPassFilter(1));
+		
+		
 		// Default filters are just OSC filters on x and y axes.
 		activateFilter(0);
 		activateFilter(1);
+		
+		activateFilter(2);
 	}
 	
 	/**
