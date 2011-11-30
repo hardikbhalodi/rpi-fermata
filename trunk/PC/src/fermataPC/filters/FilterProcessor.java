@@ -1,5 +1,7 @@
 package fermataPC.filters;
 
+import java.util.Vector;
+
 import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.ports.UnitOutputPort;
@@ -11,7 +13,8 @@ public final class FilterProcessor
 	//public static UnitInputPort input;
 	public static final Synthesizer synth = JSyn.createSynthesizer();
 	
-	private static UnitOutputPort filterInput;
+//	private static UnitOutputPort filterInput;
+	private static Vector<UnitOutputPort> filterInputs;
 	
 	public static final LineOut lineOut = new LineOut();
 	
@@ -32,6 +35,9 @@ public final class FilterProcessor
 		synth.startUnit(lineOut, time);
 		
 		self = this;
+		
+		filterInputs = new Vector<UnitOutputPort>();
+		
 	}
 	
 	public static FilterProcessor getFilterProcessor()
@@ -45,7 +51,8 @@ public final class FilterProcessor
 	
 	public static void connectOutput(UnitOutputPort listenTo)
 	{
-		filterInput = listenTo;
+		filterInputs.add(listenTo);
+	//	filterInput = listenTo;
 		reRouteFilters();
 	}
 	
@@ -84,15 +91,30 @@ public final class FilterProcessor
 			System.out.println("yfilter is " + yFilter.name);
 		System.out.println("Re-routing filters");
 		
-		if (filterInput == null)
+		if (filterInputs.size() == 0)
 			return;
 		
-		filterInput.disconnectAll(0);
+		Vector<UnitOutputPort> badInputs = new Vector<UnitOutputPort>();
+		for (UnitOutputPort filterInput : filterInputs)
+		{
+			if (filterInput == null || filterInput.getUnit() == null)
+			{
+				badInputs.add(filterInput);
+				continue;
+			}
+			
+			filterInput.disconnectAll(0);		
+			filterInput.connect(0, xFilter.input, 0);
+		}
+		
+		for (UnitOutputPort badInput : badInputs)
+		{
+			filterInputs.remove(badInput);
+		}
+		
+
 		lineOut.input.disconnectAll(0);
 		lineOut.input.disconnectAll(1);
-		
-		
-		filterInput.connect(0, xFilter.input, 0);
 		
 		if (yFilter == null || xFilter.getAxes() == 2)
 		{
