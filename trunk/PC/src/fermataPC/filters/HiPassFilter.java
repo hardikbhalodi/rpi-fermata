@@ -21,7 +21,7 @@ public class HiPassFilter extends Filter
 		fhp.frequency.setMinimum(0);
 
 		fhp.Q.set(5);
-		fhp.amplitude.set(.5);
+		fhp.amplitude.set(1);
 		
 		fhp.frequency.set(220);
 		
@@ -43,6 +43,5 @@ public class HiPassFilter extends Filter
 		
 		fhp.input.disconnectAll(0);
 		fhp.output.disconnectAll(0);
-		
 	}
 }
