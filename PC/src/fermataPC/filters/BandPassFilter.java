@@ -25,11 +25,13 @@ public class BandPassFilter extends Filter
 		bpf2.frequency.setMaximum(10000);
 		bpf2.frequency.setMinimum(0);
 		
+		bpf1.amplitude.set(2);
+		
 		bpf1.amplitude.set(100);
 		bpf2.amplitude.set(.01);
 		
-		bpf1.Q.set(10);
-		bpf2.Q.set(10);
+		bpf1.Q.set(5);
+		bpf2.Q.set(5);
 		
 		bpf1.frequency.set(440);
 		bpf2.frequency.set(440);
@@ -55,9 +57,6 @@ public class BandPassFilter extends Filter
 		bpf1.input.disconnectAll(0);
 		bpf2.input.disconnectAll(0);
 		bpf1.output.disconnectAll(0);
-		bpf2.output.disconnectAll(0);
-		
-		bpf2.output.disconnectAll(1);
-		
+		bpf2.output.disconnectAll(0);		
 	}
 }

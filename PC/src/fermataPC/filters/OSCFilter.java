@@ -34,6 +34,5 @@ public class OSCFilter extends Filter
 	{
 		output.disconnectAll(0);
 		input.disconnectAll(0);
-		output.disconnectAll(1);
 	}
 }

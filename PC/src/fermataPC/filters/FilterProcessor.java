@@ -4,13 +4,9 @@ import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.LineOut;
-import com.jsyn.unitgen.PowerOfTwo;
 
 public final class FilterProcessor
-{
-	@SuppressWarnings("unused")
-	private static PowerOfTwo powerOfTwo;
-	
+{	
 	private static FilterProcessor self;
 	//public static UnitInputPort input;
 	public static final Synthesizer synth = JSyn.createSynthesizer();
@@ -26,8 +22,6 @@ public final class FilterProcessor
 		super();
 			
 		synth.add(lineOut);
-		
-		synth.add(powerOfTwo = new PowerOfTwo());
 		
 		synth.start();
 		
@@ -85,7 +79,6 @@ public final class FilterProcessor
 	
 	private static void reRouteFilters()
 	{
-		
 		System.out.println("xFilter is " + xFilter.name);
 		if (yFilter != null)
 			System.out.println("yfilter is " + yFilter.name);
@@ -95,9 +88,11 @@ public final class FilterProcessor
 			return;
 		
 		filterInput.disconnectAll(0);
+		lineOut.input.disconnectAll(0);
+		lineOut.input.disconnectAll(1);
+		
 		
 		filterInput.connect(0, xFilter.input, 0);
-		
 		
 		if (yFilter == null || xFilter.getAxes() == 2)
 		{

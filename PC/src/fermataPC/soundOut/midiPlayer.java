@@ -3,6 +3,7 @@ package fermataPC.soundOut;
 import java.util.HashSet;
 
 import com.jsyn.instruments.ClassicSynthVoice;
+import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.UnitVoice;
 import com.jsyn.util.VoiceAllocator;
 import com.jsyn.util.VoiceFactory;
@@ -32,6 +33,10 @@ public final class midiPlayer
 			
 			noteOffQueue = new HashSet<Integer>();
 			activeNotes = new HashSet<Integer>();
+			
+			SineOscillator sin = new SineOscillator();
+			
+			FilterProcessor.synth.add(sin);
 		}	
 	}
 	
