@@ -31,8 +31,6 @@ public abstract class FilterHandler
 		// Default filters are just OSC filters on x and y axes.
 		activateFilter(0);
 		activateFilter(1);
-		
-		activateFilter(2);
 	}
 	
 	/**
