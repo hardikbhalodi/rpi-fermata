@@ -20,8 +20,6 @@ public class BandPassFilter extends Filter
 		bpf.frequency.setMaximum(10000);
 		bpf.frequency.setMinimum(0);
 		
-		bpf.amplitude.set(2);
-		
 		bpf.amplitude.set(1);
 		
 		bpf.Q.set(5);

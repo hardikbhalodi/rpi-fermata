@@ -3,13 +3,9 @@ package fermataPC.soundOut;
 import java.io.File;
 import java.io.IOException;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.jsyn.data.FloatSample;
-import com.jsyn.unitgen.DualInTwoOut;
 import com.jsyn.unitgen.VariableRateDataReader;
 import com.jsyn.unitgen.VariableRateMonoReader;
 import com.jsyn.unitgen.VariableRateStereoReader;

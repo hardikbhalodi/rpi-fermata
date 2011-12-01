@@ -24,6 +24,9 @@ public abstract class FilterHandler
 		addFilter(new BandPassFilter(0));
 		addFilter(new BandPassFilter(1));
 		
+		addFilter(new BandStopFilter(0));
+		addFilter(new BandStopFilter(1));
+		
 		addFilter(new HiPassFilter(0));
 		addFilter(new HiPassFilter(1));
 		
