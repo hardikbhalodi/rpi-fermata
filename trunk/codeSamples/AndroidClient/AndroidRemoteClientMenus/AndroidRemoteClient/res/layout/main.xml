@@ -4,16 +4,25 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
+    <ImageView
+    android:id="@+id/marker"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/marker"
+    android:visibility="gone"
+    />
+    <TextView  
+    android:id="@+id/textView" 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Hello, Whomp Master"
+    />
     <TextView  
     android:id="@+id/touchView" 
     android:background="@drawable/graph" 
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:layout_weight="0.64"/>
-<TextView  
-    android:id="@+id/textView" 
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="Hello World, TestActivity"
-    />
+
+    
 </LinearLayout>

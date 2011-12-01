@@ -1,5 +1,6 @@
 package remote.client;
 
+import remote.client.R.menu;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -10,12 +11,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Display;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,10 +41,17 @@ public class FermataActivity extends Activity {
 	public static final int MESSAGE_DEVICE_NAME = 4;
 	public static final int MESSAGE_TOAST = 5;
 	public static final int MESSAGE_IP = 6;
+	public static final int MESSAGE_FILTER_LIST = 7;
 
 	// Key names received from the BluetoothCommandService Handler
 	public static final String DEVICE_NAME = "device_name";
+	public static final String FILTER_LIST = "filter_list";
 	public static final String TOAST = "toast";
+	
+	private int xfilter;
+	private int yfilter;
+	private CharSequence xfilterName;
+	private CharSequence yfilterName;
 
 	// Name of the connected device
 	private String mConnectedDeviceName = null;
@@ -50,13 +59,19 @@ public class FermataActivity extends Activity {
 	private BluetoothAdapter mBluetoothAdapter = null;
 	// Member object for Bluetooth Command Service
 	private ConnectionService mCommandService = null;
+
 	private Menu optionsMenu;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		xfilter = 0;
+		yfilter = 0;
+		xfilterName = "None";
+		yfilterName = "None";
+		
 		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.main);
@@ -66,38 +81,37 @@ public class FermataActivity extends Activity {
 		final View touchView = findViewById(R.id.touchView);
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
-		mTitle.setText(R.string.app_name);
-		mTitle = (TextView) findViewById(R.id.title_right_text);
+		mTitle.setText("Press the menu botton");
+		//mTitle = (TextView) findViewById(R.id.title_right_text);
+
+			
+		
 		touchView.setOnTouchListener(new View.OnTouchListener() {
+			
+			Display display = getWindowManager().getDefaultDisplay(); 
+			int width = display.getWidth();
+			int height = display.getHeight();
+			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				String xcoord= String.valueOf((int)event.getX());
-				String ycoord= String.valueOf((int)event.getY());
-
-				if (xcoord.length()<3){
-					if (xcoord.length()<2){
-						xcoord="0"+xcoord;
-					}
-					xcoord="0"+xcoord;
-
-				}
-				if (ycoord.length()<3){
-					if (ycoord.length()<2){
-						ycoord="0"+xcoord;
-					}
-					ycoord="0"+ycoord;
-
-				}
-				String fullText = "x" + xcoord + "y" + ycoord;
-				textView.setText(fullText);
-
+				String xcoord= String.valueOf((int)((double)(event.getX()/width) * 255));
+				String ycoord= String.valueOf((int)((double)(event.getY()/height) * 255));
+				String fullText = xfilter + "," + xcoord + ";" + yfilter + "," + ycoord;
+				//textView.setText(fullText);
+				final View markerView = findViewById(R.id.marker);
+				markerView.bringToFront();
+				markerView.layout((int)event.getX(),(int)event.getY(),(int)event.getX()+20,(int)event.getY()+20);
+				
+				//(event.getX());
+				//markerView.setBottom(event.getY());
+				markerView.setVisibility(0);
+				//markerView.
 				mCommandService.write(fullText);
 				return true;
 			}
 		});
 		// Get local Bluetooth adapter
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
 		// If the adapter is null, then Bluetooth is not supported
 		if (mBluetoothAdapter == null) {
 			Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
@@ -140,11 +154,6 @@ public class FermataActivity extends Activity {
 	private void setupCommand() {
 		// Initialize the BluetoothChatService to perform bluetooth connections
 		mCommandService = new ConnectionService(this, mHandler);
-		String message = "guh";
-		byte[] send = new byte[4];
-		send=message.getBytes();
-		System.out.println("guh shouuld print "+send);
-		mCommandService.write(send);
 	}
 
 	@Override
@@ -184,7 +193,6 @@ public class FermataActivity extends Activity {
 					break;
 				}
 				break;
-
 			case MESSAGE_DEVICE_NAME:
 				// save the connected device's name
 				Log.v("FermataDebug", "Setting the device name to: " + msg.getData().getString(DEVICE_NAME));
@@ -196,6 +204,49 @@ public class FermataActivity extends Activity {
 				Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
 						Toast.LENGTH_SHORT).show();
 				break;
+
+			case MESSAGE_FILTER_LIST:
+				if (optionsMenu.size()<4)
+				{
+					
+					String name;
+					int uid, axis, default_value;
+					SubMenu xFiltersMenu = optionsMenu.addSubMenu(3, 0, 0, "Change X Filter");
+					SubMenu yFiltersMenu = optionsMenu.addSubMenu(3, 0, 0, "Change Y Filter");
+					//SubMenu xyFiltersMenu = optionsMenu.addSubMenu(3, 0, 0, "Change X and Y Filter");
+
+					String filters[] =(msg.getData().getString(FILTER_LIST)).split(";");
+					for(int i = 0; i < filters.length; i++)
+					{
+						String specs[] = filters[i].split(",");
+						name=specs[0];
+						uid = Integer.parseInt(specs[1]);
+						axis = Integer.parseInt(specs[2]);
+						if(axis==0)
+						{
+							xFiltersMenu.add(axis, uid, 0, name);
+						}
+						if(axis==1)
+						{
+							yFiltersMenu.add(axis, uid, 0, name);
+						}
+						//If we implement filters that act on X and Y filters at the same time
+						//if(axis==2)
+						//{
+						//	yFiltersMenu.add(axis, uid, 0, name);
+						//}
+					}
+					break;
+				}
+				//xfilter = 0;
+				//yfilter=1;
+				final TextView textView = (TextView)findViewById(R.id.textView);
+
+				xfilterName = "OSC Passthrough (X)";
+
+				yfilterName = "OSC Pass-through (Y)";
+				textView.setText("X: " + xfilterName +"\n"+  "Y: " + yfilterName);
+
 			}
 		}
 	};
@@ -252,86 +303,56 @@ public class FermataActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.option_menu, menu);
-		//String testFilters[] = {"Volume", "Wubwubwub",  "Pitch", "Contrast", "Coffee","HEPA", "VCHIP"};
-		//SubMenu filtersMenu = menu.addSubMenu(0, 0, 0, "Change Filters");
 		optionsMenu = menu;
-		//for (int i=0; i<testFilters.length; i++){
-		//	filtersMenu.add((i%2+1), i, i, testFilters[i] );
-		//}
+		
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getGroupId()){
-		case R.id.group3:
-			Toast.makeText(this, "case2", Toast.LENGTH_LONG).show();
-
-		
-			switch (item.getItemId()) {
-			case R.id.ipconnect:
-				Intent ipIntent = new Intent(this, IPConnectActivity.class);
-				startActivityForResult(ipIntent, REQUEST_IP_CONNECT);
-				return true;
-			case R.id.scan:
-				// Launch the DeviceListActivity to see devices and do scan
-				Intent serverIntent = new Intent(this, DeviceListActivity.class);
-				startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-				return true;
-			case R.id.discoverable:
-				// Ensure this device is discoverable by others
-				//ensureDiscoverable();
-				//FermataActivity.this.openOptionsMenu();
-				//optionsMenu.performIdentifierAction(filtersMenu,0);
-				return true;
-			}
-				
-		case 0:
-			Toast.makeText(this, "toast", Toast.LENGTH_LONG).show();
-			//optionsMenu.setGroupVisible(0, false);
-			//item.setVisible(true);
-			//FermataActivity.this.openOptionsMenu();
-			//Intent ipIntent = new Intent(this, IPConnectActivity.class);
-			//startActivityForResult(ipIntent, REQUEST_IP_CONNECT);
-			//return true;
-		case R.id.group1:
-			if (item.hasSubMenu()==true){
-				Toast.makeText(this, "has submenu", Toast.LENGTH_LONG).show();	
-				SubMenu subm=item.getSubMenu();
-				subm.setGroupVisible(1, false);
-
-
-			}
-			if (item.hasSubMenu()!=true){
-				Toast.makeText(this, "does not have submenu", Toast.LENGTH_LONG).show();
-
-			}
-			//SubMenu subm=item.getSubMenu();
-			//subm.setGroupVisible(1, false);
-			Toast.makeText(this, "toast5", Toast.LENGTH_LONG).show();
-
-			//ensureDiscoverable();
-
+		switch (item.getItemId()) {
+		case R.id.ipconnect:
+			Intent ipIntent = new Intent(this, IPConnectActivity.class);
+			startActivityForResult(ipIntent, REQUEST_IP_CONNECT);
 			return true;
-		case R.id.group2:
-			//subm=item.getSubMenu();
-			//Toast.makeText(this, subm.size(), Toast.LENGTH_LONG).show();
-			//subm.setGroupVisible(R.id.group2, false);
-			//ensureDiscoverable();
-			Toast.makeText(this, "toast", Toast.LENGTH_LONG).show();
-
+		case R.id.scan:
+			// Launch the DeviceListActivity to see devices and do scan
+			Intent serverIntent = new Intent(this, DeviceListActivity.class);
+			startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 			return true;
-			//performIdentifierAction(0,0);
-		//default:
-			
-		//	return super.onOptionsItemSelected(item);
 		}
+		final TextView textView = (TextView)findViewById(R.id.textView);
+
+		switch (item.getGroupId()) {
+		case 0:
+			xfilter = item.getItemId();
+			xfilterName = item.getTitle();
+			//mTitle = (TextView) findViewById(R.id.title_left_text);
+			textView.setText("X: " + xfilterName +"\n"+  "Y: " + yfilterName);
+			//mTitle = (TextView) findViewById(R.id.title_right_text);
+			break;
+		case 1:
+			yfilter = item.getItemId();
+			yfilterName = item.getTitle();
+			//mTitle = (TextView) findViewById(R.id.title_left_text);
+			textView.setText("X: " + xfilterName + "\n"+ "Y: " + yfilterName);
+			//mTitle = (TextView) findViewById(R.id.title_right_text);
+			break;
+		}
+		/*case 2:
+			xfilter = item.getTitle();
+			yfilter = item.getItemId();
+			mTitle = (TextView) findViewById(R.id.title_left_text);
+			mTitle.setText("Xfilter: " + xfilter +  " Yfilter: " + yfilter);
+			mTitle = (TextView) findViewById(R.id.title_right_text);
+			break;
+		
+		}
+		*/
+			
 		return false;
 	}
-	
-	
-	
-	
+
 	/*
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
