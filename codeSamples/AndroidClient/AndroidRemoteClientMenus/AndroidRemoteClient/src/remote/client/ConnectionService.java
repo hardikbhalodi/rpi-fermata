@@ -44,6 +44,7 @@ public class ConnectionService {
 	public static final int STATE_LISTEN = 1;     // now listening for incoming connections
 	public static final int STATE_CONNECTING = 2; // now initiating an outgoing connection
 	public static final int STATE_CONNECTED = 3;  // now connected to a remote device
+	public static final int MESSAGE_FILTER_LIST = 4;
 
 	/**
 	 * Constructor. Prepares a new BluetoothChat session.
@@ -111,6 +112,12 @@ public class ConnectionService {
 		setState(STATE_CONNECTING);
 	}
 
+	/**
+	 * Start the ConnectedThread to begin managing the TCP/IP connection 
+	 * @param ip The IP address of the server
+	 * @param port The port of the server
+	 */
+	
 	public synchronized void connect(String ip, int port) {
 
 		Bundle bundle = new Bundle();
@@ -370,6 +377,21 @@ public class ConnectionService {
 			mmOutStream = tmpOut;
 			dataOut = new DataOutputStream(mmOutStream);
 			dataIn = new DataInputStream(mmInStream);
+			
+			Message msg = mHandler.obtainMessage(FermataActivity.MESSAGE_FILTER_LIST);
+			Bundle bundle = new Bundle();
+			try 
+			{
+				bundle.putString(FermataActivity.FILTER_LIST, dataIn.readUTF());
+			} 
+			catch (IOException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			msg.setData(bundle);
+			mHandler.sendMessage(msg);
+			
 		}
 
 		public ConnectedThread(BluetoothSocket socket) {
@@ -385,12 +407,28 @@ public class ConnectionService {
 				tmpOut = socket.getOutputStream();
 				dataOut = new DataOutputStream(tmpOut);
 				dataIn = new DataInputStream(tmpIn);
+				
 			} catch (IOException e) {
 				Log.e(TAG, "temp sockets not created", e);
 			}
 
 			mmInStream = tmpIn;
 			mmOutStream = tmpOut;
+			
+			Message msg = mHandler.obtainMessage(FermataActivity.MESSAGE_FILTER_LIST);
+			Bundle bundle = new Bundle();
+			try 
+			{
+				bundle.putString(FermataActivity.FILTER_LIST, dataIn.readUTF());
+			} 
+			catch (IOException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			msg.setData(bundle);
+			mHandler.sendMessage(msg);
+			
 		}
 
 		public void run() {
