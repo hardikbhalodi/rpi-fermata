@@ -39,9 +39,7 @@ public class BandStopFilter extends Filter
 	}
 	@Override
 	public void cancelFilter()
-	{
-		FilterProcessor.synth.remove(bsf);
-		
+	{		
 		bsf.input.disconnectAll(0);
 		bsf.output.disconnectAll(0);	
 	}

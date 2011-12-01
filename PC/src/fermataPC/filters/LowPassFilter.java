@@ -38,9 +38,7 @@ public class LowPassFilter extends Filter
 	}
 	@Override
 	public void cancelFilter()
-	{
-		FilterProcessor.synth.remove(flp);
-		
+	{		
 		flp.input.disconnectAll(0);
 		flp.output.disconnectAll(0);
 	}

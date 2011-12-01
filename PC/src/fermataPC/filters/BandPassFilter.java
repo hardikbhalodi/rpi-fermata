@@ -39,9 +39,7 @@ public class BandPassFilter extends Filter
 	}
 	@Override
 	public void cancelFilter()
-	{
-		FilterProcessor.synth.remove(bpf);
-		
+	{		
 		bpf.input.disconnectAll(0);
 		bpf.output.disconnectAll(0);	
 	}

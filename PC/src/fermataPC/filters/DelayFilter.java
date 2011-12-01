@@ -36,7 +36,6 @@ public class DelayFilter extends Filter
 	public void cancelFilter() 
 	{
 		// TODO Auto-generated method stub
-		FilterProcessor.synth.remove(delFilter);
 		
 		//delFilter.stop();
 		delFilter.input.disconnectAll(0);

@@ -38,9 +38,7 @@ public class HiPassFilter extends Filter
 	}
 	@Override
 	public void cancelFilter()
-	{
-		FilterProcessor.synth.remove(fhp);
-		
+	{		
 		fhp.input.disconnectAll(0);
 		fhp.output.disconnectAll(0);
 	}
