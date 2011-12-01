@@ -33,7 +33,6 @@ public class SelectSoundFileBox extends JPanel implements ActionListener
 	
 	public void initialize()
 	{
-		
 		playButton = new JButton("Play");
 		this.add(playButton);
 		playButton.addActionListener(this);
@@ -74,8 +73,3 @@ public class SelectSoundFileBox extends JPanel implements ActionListener
 		}
 	}
 }
-
-
-
-
-

@@ -32,10 +32,7 @@ public class VolumeFilter extends Filter
 
 	@Override
 	public void cancelFilter() 
-	{
-		// TODO Auto-generated method stub
-		FilterProcessor.synth.remove(volFilter);
-		
+	{		
 		volFilter.inputA.disconnectAll(0);
 		volFilter.output.disconnectAll(0);	
 		
