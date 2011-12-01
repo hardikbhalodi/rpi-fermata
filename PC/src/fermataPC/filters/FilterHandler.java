@@ -27,6 +27,13 @@ public abstract class FilterHandler
 		addFilter(new HiPassFilter(0));
 		addFilter(new HiPassFilter(1));
 		
+		addFilter(new LowPassFilter(0));
+		addFilter(new LowPassFilter(1));
+		
+		addFilter(new VolumeFilter(0));
+		addFilter(new VolumeFilter(1));
+
+		
 		
 		// Default filters are just OSC filters on x and y axes.
 		activateFilter(0);
