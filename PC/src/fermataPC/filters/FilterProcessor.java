@@ -21,9 +21,10 @@ public final class FilterProcessor
 	private static Filter xFilter, yFilter;
 	
 	private FilterProcessor()
-	{		
+	{
+		
 		super();
-			
+		
 		synth.add(lineOut);
 		
 		synth.start();

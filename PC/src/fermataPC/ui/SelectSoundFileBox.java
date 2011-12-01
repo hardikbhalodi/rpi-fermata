@@ -9,6 +9,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import fermataPC.soundOut.LoadSoundFile;
 
@@ -41,10 +43,11 @@ public class SelectSoundFileBox extends JPanel implements ActionListener
 		this.add(browseButton);
 		browseButton.addActionListener(this);
 		
-		soundFileLabel = new JLabel("browse for an mp3 file on hard disk");
+		soundFileLabel = new JLabel("browse for signed 16 bit PCM *.wav file on hard disk");
 		this.add(soundFileLabel);
 		
 		fc = new JFileChooser();
+		fc.setFileFilter(new FileNameExtensionFilter("Audio files", "wav"));
 	}
 	
 	public void layoutPanel()
