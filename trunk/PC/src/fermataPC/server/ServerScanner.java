@@ -7,6 +7,8 @@ public class ServerScanner implements Runnable
 {
 	private ServerManager theServer;
 	
+	static int UID1, UID2, val1, val2;
+	
 	
 	public ServerScanner(ServerManager theServer)
 	{
@@ -47,18 +49,24 @@ public class ServerScanner implements Runnable
 		String[] coord1 = messages[0].split(",");
 		String[] coord2 = messages[1].split(",");
 		
-		Integer UID1 = Integer.parseInt(coord1[0]);
-		Integer UID2 = Integer.parseInt(coord2[0]);
+		Integer newUID1 = Integer.parseInt(coord1[0]);
+		Integer newUID2 = Integer.parseInt(coord2[0]);
 		
 		Integer scalar1 = Math.max(0 , Math.min(255, Integer.parseInt(coord1[1])));
 		Integer scalar2 = Math.max(0, Math.min(255, 255 - Integer.parseInt(coord2[1])));
 		
-		Coordinate c1 = new Coordinate(UID1, scalar1);
-		Coordinate c2 = new Coordinate(UID2, scalar2);
+		if (UID1 != newUID1 || scalar1 != val1)
+		{
+
+			Coordinate c1 = new Coordinate(newUID1, scalar1);
+			FilterHandler.applyCoordinate(c1);
+		}
 		
-		FilterHandler.applyCoordinate(c1);
-		FilterHandler.applyCoordinate(c2);	
-		
+		if (UID2 != newUID2 || scalar2 != val2)
+		{
+			Coordinate c2 = new Coordinate(newUID2, scalar2);
+			FilterHandler.applyCoordinate(c2);
+		}
 	//	System.out.println("UID1: " + UID1 + "; scalar: " + scalar1 + ";UID2: " + UID2 + "; scalar: " + scalar2);
 	}
 }

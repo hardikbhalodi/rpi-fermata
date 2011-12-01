@@ -62,5 +62,10 @@ public class Coordinate
 	 * @return the coordinate's current scalar value.
 	 */
 	public int getValue() { return value;}
+	
+	public boolean equals(Coordinate coord)
+	{
+		return (coord.filterID == filterID && coord.value == value);
+	}
 		
 }
