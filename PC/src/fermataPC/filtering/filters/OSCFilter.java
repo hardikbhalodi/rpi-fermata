@@ -1,7 +1,9 @@
-package fermataPC.filtering;
+package fermataPC.filtering.filters;
 
 import com.jsyn.unitgen.Latch;
 
+import fermataPC.filtering.Filter;
+import fermataPC.filtering.FilterProcessor;
 import fermataPC.osc.OSCSender;
 import fermataPC.util.Coordinate;
 

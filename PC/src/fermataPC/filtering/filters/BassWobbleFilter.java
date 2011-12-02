@@ -1,10 +1,12 @@
-package fermataPC.filtering;
+package fermataPC.filtering.filters;
 
 import com.jsyn.unitgen.Add;
 import com.jsyn.unitgen.FilterLowPass;
 import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 
+import fermataPC.filtering.Filter;
+import fermataPC.filtering.FilterProcessor;
 import fermataPC.util.Coordinate;
 
 /**
@@ -35,7 +37,7 @@ public class BassWobbleFilter extends Filter
 	public BassWobbleFilter(int axis)
 	{		
 		super.axis = axis;
-		name = "Bass Wobbler ("+ (axis == 0 ? "x" : "y") + ")";
+		super.name = "Bass Wobbler ("+ (axis == 0 ? "x" : "y") + ")";
 		
 		FilterProcessor.synth.add(lfo = new TriangleOscillator());
 		FilterProcessor.synth.add(flp = new FilterLowPass());

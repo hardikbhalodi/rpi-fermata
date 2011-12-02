@@ -9,6 +9,7 @@ import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.LineOut;
 
 
+
 /**
  * The FilterProcessor class handles the coordination of audio and filters.
  * When a filter is activated, the old filter on its axis must be deactivated
