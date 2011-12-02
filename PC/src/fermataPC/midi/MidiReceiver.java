@@ -3,7 +3,7 @@ package fermataPC.midi;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
 
-import fermataPC.soundOut.midiPlayer;
+import fermataPC.sound.midiPlayer;
 
 /**
  * The MidiReceiver deals with messages from whatever transmitter is currently

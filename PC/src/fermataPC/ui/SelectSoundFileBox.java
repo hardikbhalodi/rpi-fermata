@@ -11,8 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import fermataPC.soundOut.LoadSoundFile;
-import fermataPC.soundOut.PlaySoundFile;
+import fermataPC.sound.LoadSoundFile;
+import fermataPC.sound.PlaySoundFile;
 
 
 @SuppressWarnings("serial")

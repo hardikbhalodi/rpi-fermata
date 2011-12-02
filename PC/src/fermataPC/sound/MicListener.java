@@ -1,4 +1,4 @@
-package fermataPC.soundOut;
+package fermataPC.sound;
 
 import com.jsyn.unitgen.LineIn;
 

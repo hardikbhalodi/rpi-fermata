@@ -1,4 +1,4 @@
-package fermataPC.soundOut;
+package fermataPC.sound;
 
 import java.io.File;
 import java.io.IOException;
