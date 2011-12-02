@@ -1,4 +1,4 @@
-package fermataPC.filters;
+package fermataPC.filtering;
 
 import com.jsyn.unitgen.FilterHighPass;
 
