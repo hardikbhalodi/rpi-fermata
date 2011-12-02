@@ -43,8 +43,14 @@ public class LowPassFilter extends Filter
 	public void setCoordinate(Coordinate coord)
 	{
 		int val = coord.getValue();
+		Double freq;
 		
-		Double freq = Math.pow(val , 1.662137217); //0 to 10,000
+		if (val < 230)
+			if (val > 3)
+				freq = Math.pow(val , 1.53705); //0 to 10,000. . . normally.
+			else freq = 0.0;
+		else // val > 230.
+			freq = Math.pow(val, 1.9) - (Math.pow(230, 1.9) - Math.pow(230, 1.53705)); // increase steepness, normalize to remove bump.
 		flp.frequency.set(freq);
 	}
 	@Override

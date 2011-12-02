@@ -47,7 +47,7 @@ public class BandStopFilter extends Filter
 	{
 		int val = coord.getValue();
 		
-		Double freq = Math.pow(val , 1.662137217); //0 to 10,000
+		Double freq = Math.pow(val , 1.53705); //0 to 5,000
 		bsf.frequency.set(freq);
 	}
 	@Override
