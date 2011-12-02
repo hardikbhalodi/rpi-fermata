@@ -1,6 +1,6 @@
 package fermataPC.sound.debug;
 
-import fermataPC.sound.midiPlayer;
+import fermataPC.sound.MidiPlayer2;
 
 public class DummyMIDISender implements Runnable
 {
@@ -18,21 +18,21 @@ public class DummyMIDISender implements Runnable
 			for(;;)
 			{
 				System.out.println("note on");
-				midiPlayer.noteOn(69 , 63);
+				MidiPlayer2.noteOn(69 , 63);
 				
 				Thread.sleep(4000);
 				System.out.println("note off");
-				midiPlayer.noteOff(69, 63);
+				MidiPlayer2.noteOff(69, 63);
 				
 				Thread.sleep(4000);
 				
 				System.out.println("note on 2");
 				
-				midiPlayer.noteOn(69 , 63);
+				MidiPlayer2.noteOn(69 , 63);
 				
 				Thread.sleep(10000);
 				System.out.println("note off 2");
-				midiPlayer.noteOff(69 , 63);
+				MidiPlayer2.noteOff(69 , 63);
 				
 				Thread.sleep(10000);
 			}
