@@ -2,7 +2,7 @@ package fermataPC;
 
 import javax.swing.UIManager;
 
-import fermataPC.filters.FilterHandler;
+import fermataPC.filtering.FilterHandler;
 import fermataPC.midi.MidiHandler;
 import fermataPC.osc.OSCSender;
 import fermataPC.server.ServerManager;

@@ -11,7 +11,7 @@ import com.jsyn.unitgen.VariableRateMonoReader;
 import com.jsyn.unitgen.VariableRateStereoReader;
 import com.jsyn.util.SampleLoader;
 
-import fermataPC.filters.FilterProcessor;
+import fermataPC.filtering.FilterProcessor;
 
 /**
  * Supports playback of mono signed 16 bit PCM wav files

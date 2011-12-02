@@ -8,7 +8,7 @@ import com.jsyn.unitgen.UnitVoice;
 import com.jsyn.util.VoiceAllocator;
 import com.jsyn.util.VoiceFactory;
 
-import fermataPC.filters.FilterProcessor;
+import fermataPC.filtering.FilterProcessor;
 
 public final class midiPlayer
 {

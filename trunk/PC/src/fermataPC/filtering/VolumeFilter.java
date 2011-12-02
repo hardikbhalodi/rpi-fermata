@@ -1,4 +1,4 @@
-package fermataPC.filters;
+package fermataPC.filtering;
 
 import fermataPC.util.Coordinate;
 import com.jsyn.unitgen.Multiply;

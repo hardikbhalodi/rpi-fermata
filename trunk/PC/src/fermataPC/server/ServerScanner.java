@@ -1,6 +1,6 @@
 package fermataPC.server;
 
-import fermataPC.filters.FilterHandler;
+import fermataPC.filtering.FilterHandler;
 import fermataPC.util.Coordinate;
 
 public class ServerScanner implements Runnable

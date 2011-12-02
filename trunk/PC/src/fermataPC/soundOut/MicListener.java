@@ -2,7 +2,7 @@ package fermataPC.soundOut;
 
 import com.jsyn.unitgen.LineIn;
 
-import fermataPC.filters.FilterProcessor;
+import fermataPC.filtering.FilterProcessor;
 
 /**
  * The MicListener allows play-through of the system's line in to be 

@@ -1,4 +1,4 @@
-/*package fermataPC.filters;
+/*package fermataPC.filtering;
  * 
  */
 //TODO get delay filters working in the future
