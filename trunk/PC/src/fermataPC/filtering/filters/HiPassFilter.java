@@ -1,7 +1,9 @@
-package fermataPC.filtering;
+package fermataPC.filtering.filters;
 
 import com.jsyn.unitgen.FilterHighPass;
 
+import fermataPC.filtering.Filter;
+import fermataPC.filtering.FilterProcessor;
 import fermataPC.util.Coordinate;
 
 /**

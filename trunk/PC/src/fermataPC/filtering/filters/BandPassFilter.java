@@ -1,7 +1,9 @@
-package fermataPC.filtering;
+package fermataPC.filtering.filters;
 
 import com.jsyn.unitgen.FilterBandPass;
 
+import fermataPC.filtering.Filter;
+import fermataPC.filtering.FilterProcessor;
 import fermataPC.util.Coordinate;
 
 /**
@@ -23,7 +25,7 @@ public class BandPassFilter extends Filter
 	public BandPassFilter(int axis)
 	{		
 		super.axis = axis;
-		name = "Bandpass ("+ (axis == 0 ? "x" : "y") + ")";
+		super.name = "Bandpass ("+ (axis == 0 ? "x" : "y") + ")";
 		bpf = new FilterBandPass();
 
 		FilterProcessor.synth.add(bpf);

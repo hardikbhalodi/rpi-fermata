@@ -1,7 +1,9 @@
-package fermataPC.filtering;
+package fermataPC.filtering.filters;
 
 import com.jsyn.unitgen.FilterBandStop;
 
+import fermataPC.filtering.Filter;
+import fermataPC.filtering.FilterProcessor;
 import fermataPC.util.Coordinate;
 
 /**
@@ -25,7 +27,7 @@ public class BandStopFilter extends Filter
 	public BandStopFilter(int axis)
 	{		
 		super.axis = axis;
-		name = "Bandstop ("+ (axis == 0 ? "x" : "y") + ")";
+		super.name = "Bandstop ("+ (axis == 0 ? "x" : "y") + ")";
 		bsf = new FilterBandStop();
 
 		FilterProcessor.synth.add(bsf);

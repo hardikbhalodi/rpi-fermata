@@ -1,5 +1,7 @@
-package fermataPC.filtering;
+package fermataPC.filtering.filters;
 
+import fermataPC.filtering.Filter;
+import fermataPC.filtering.FilterProcessor;
 import fermataPC.util.Coordinate;
 import com.jsyn.unitgen.Multiply;
 
@@ -26,7 +28,7 @@ public class VolumeFilter extends Filter
 	public VolumeFilter(int axis)
 	{	
 		super.axis = axis;
-		name = "Volume ("+ (axis == 0 ? "x" : "y") + ")";
+		super.name = "Volume ("+ (axis == 0 ? "x" : "y") + ")";
 		volFilter = new Multiply();
 		
 		FilterProcessor.synth.add(volFilter);
