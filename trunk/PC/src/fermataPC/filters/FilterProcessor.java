@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
+import com.jsyn.devices.AudioDeviceManager;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.LineOut;
 
@@ -56,21 +57,14 @@ public final class FilterProcessor
 	private FilterProcessor()
 	{
 		super();
-		
 		synth.add(lineOut);
-		
-		synth.start();
-		
+		synth.start( 44100, AudioDeviceManager.USE_DEFAULT_DEVICE, 2, AudioDeviceManager.USE_DEFAULT_DEVICE,
+				2 );
 		double timeNow = synth.getCurrentTime();
-		
 		double time = timeNow + .5;
-		
 		synth.startUnit(lineOut, time);
-		
 		self = this;
-		
 		filterInputs = new Vector<UnitOutputPort>();
-		
 	}
 	
 	/**
