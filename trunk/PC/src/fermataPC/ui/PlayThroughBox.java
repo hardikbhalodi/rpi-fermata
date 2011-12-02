@@ -10,12 +10,22 @@ import javax.swing.JPanel;
 
 import fermataPC.soundOut.MicListener;
 
+/**
+ * The PlayThroughBox is the GUI element enabling users to turn on and off
+ * their microphones.
+ * @author katzj2
+ *
+ */
 @SuppressWarnings("serial")
 public class PlayThroughBox extends JPanel
 {
 	private JCheckBox cbox;
 	private JPanel subPane;
 	private JLabel label;
+	
+	/**
+	 * Creates the PlayThroughBox
+	 */
 	public PlayThroughBox()
 	{
 		super();
@@ -23,6 +33,9 @@ public class PlayThroughBox extends JPanel
 		layoutPanel();
 	}
 	
+	/**
+	 * Initializes all the fields of the box.
+	 */
 	public void initialize()
 	{
 		cbox = new JCheckBox("Microphone (line in) playthrough enabled?");
@@ -31,6 +44,9 @@ public class PlayThroughBox extends JPanel
 		label = new JLabel("Configure microphone settings:");
 	}
 	
+	/**
+	 * Lays out all the fields of the box.
+	 */
 	public void layoutPanel()
 	{
 		this.add(label);
@@ -39,16 +55,21 @@ public class PlayThroughBox extends JPanel
 		subPane.add(cbox);
 	}
 	
+	/**
+	 * This listener knows when the checkbox is manipulated.
+	 * @author katzj2
+	 *
+	 */
 	private class CheckListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
-			if (cbox.isSelected())
+			if (cbox.isSelected()) // Then they've checked it.
 			{
 				MicListener.startListening();
 			}
-			else MicListener.stopListening();
+			else MicListener.stopListening();	// They've unchecked it.
 		}
 	}
 }
