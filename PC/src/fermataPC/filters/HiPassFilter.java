@@ -4,11 +4,22 @@ import com.jsyn.unitgen.FilterHighPass;
 
 import fermataPC.util.Coordinate;
 
+/**
+ * A high-pass filter passes audio with frequencies higher than the cutoff.
+ * @author katzj2
+ *
+ */
 public class HiPassFilter extends Filter
 {	
-
+	/**
+	 * JSyn's built in High Pass filter.
+	 */
 	private FilterHighPass fhp;
-	
+
+	/**
+	 * Constructs a high pass filter for use on the specified axis
+	 * @param axis 0 for x, 1 for y.
+	 */
 	public HiPassFilter(int axis)
 	{		
 		super.axis = axis;

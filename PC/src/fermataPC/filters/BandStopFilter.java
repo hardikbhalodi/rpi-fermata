@@ -4,11 +4,24 @@ import com.jsyn.unitgen.FilterBandStop;
 
 import fermataPC.util.Coordinate;
 
+/**
+ * a band-stop filter silences audio in a narrow band around the cutoff
+ * frequency.
+ * @author katzj2
+ *
+ */
 public class BandStopFilter extends Filter
 {	
 
+	/**
+	 * JSyn's built in band-stop.
+	 */
 	private FilterBandStop bsf;
 
+	/**
+	 * Constructs the filter on the specified axis
+	 * @param axis 0 for x, 1 for y
+	 */
 	public BandStopFilter(int axis)
 	{		
 		super.axis = axis;

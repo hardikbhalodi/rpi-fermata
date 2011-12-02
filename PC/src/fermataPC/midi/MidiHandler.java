@@ -15,6 +15,8 @@ import fermataPC.ui.MidiDeviceBox;
  * MidiHandler is the hub of all MIDI action in Fermata. It keeps track
  * of MIDI devices, makes sure the MidiReceiver is linked to the correct
  * device at any given time -- it keeps everything MIDI in sync.
+ * 
+ * MidiHandler is a singleton.
  * @author katzj2
  *
  */

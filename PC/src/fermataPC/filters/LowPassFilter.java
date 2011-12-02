@@ -4,11 +4,22 @@ import com.jsyn.unitgen.FilterLowPass;
 
 import fermataPC.util.Coordinate;
 
+/**
+ * The a low-pass filter passes audio with frequencies below the cutoff.
+ * @author katzj2
+ *
+ */
 public class LowPassFilter extends Filter
 {	
-
+	/**
+	 * JSyn's built-in low pass filter.
+	 */
 	private FilterLowPass flp;
 	
+	/**
+	 * Constructs a low-pass filter to be used on the specified axis
+	 * @param axis 0 for x, 1 for y.
+	 */
 	public LowPassFilter(int axis)
 	{		
 		super.axis = axis;

@@ -4,22 +4,25 @@ import java.io.File;
 
 import javazoom.jl.converter.Converter;
  
+/**
+ * Supports the loading/conversion of sound files into formats which can be
+ * played by the PlayAudio class.
+ * @author Tyler, katzj2
+ *
+ */
 public class LoadSoundFile 
 {
-    private String filename;
+	/**
+	 * The path to the file.
+	 */
+    private File tempFile;
  
     // constructor that takes the name of an MP3 file
     public LoadSoundFile(String filename) 
     {
-        this.filename = filename;
-    }
- 
-    // play the MP3 file
-    public void play() 
-    {
         try 
         {
-        	File tempFile = null;
+        	tempFile = null;
         	if (filename.contains(".mp3"))
         	{
 	        	tempFile = File.createTempFile("fermatawavtemp" , ".wav");
@@ -36,15 +39,20 @@ public class LoadSoundFile
         	{
         		System.out.println("Unsupported file type");
         	}
-        	PlaySoundFile.playStream(tempFile);
-        
-      //      player = new Player(bis);
-        //    player.play();
         }
         catch (Exception e) 
         {
-            System.out.println("Problem playing file " + filename);
+            System.out.println("Problem loading file " + filename);
             System.out.println(e);
         } 
-    } 
+    }
+ 
+    /**
+     * Attempts to play the audio file, doing conversions if necessary.
+     * Implementation is incomplete, so we recommend only sending in .wavs
+     */
+    public void play() 
+    {
+        PlaySoundFile.playStream(tempFile);
+    }
 }
