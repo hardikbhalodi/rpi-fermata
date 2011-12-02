@@ -2,15 +2,14 @@ package fermataPC.filters;
 
 import com.jsyn.unitgen.Add;
 import com.jsyn.unitgen.FilterLowPass;
-import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 
 import fermataPC.util.Coordinate;
 
 /**
- * The BassWobble filter applies basic wobble to the low frequencies at
- * a frequency set by the coordinate input.
+ * The BassWobble filter applies basic wobble to low frequencies at
+ * a rate set by the coordinate input.
  * @author katzj2
  *
  */
@@ -38,7 +37,7 @@ public class BassWobbleFilter extends Filter
 		super.axis = axis;
 		name = "Bass Wobbler ("+ (axis == 0 ? "x" : "y") + ")";
 		
-		FilterProcessor.synth.add(lfo = new SineOscillator());
+		FilterProcessor.synth.add(lfo = new TriangleOscillator());
 		FilterProcessor.synth.add(flp = new FilterLowPass());
 		FilterProcessor.synth.add(add1 = new Add());
 

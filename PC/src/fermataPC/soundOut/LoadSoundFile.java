@@ -1,8 +1,6 @@
 package fermataPC.soundOut;
 
 import java.io.File;
-
-import javazoom.jl.converter.Converter;
  
 /**
  * Supports the loading/conversion of sound files into formats which can be
@@ -15,7 +13,8 @@ public class LoadSoundFile
 	/**
 	 * The path to the file.
 	 */
-    private File tempFile;
+    private File tempFile; //If we're converting, the converted song will be
+    						// saved as a temp file on the user's machine.
  
     // constructor that takes the name of an MP3 file
     public LoadSoundFile(String filename) 
@@ -23,13 +22,14 @@ public class LoadSoundFile
         try 
         {
         	tempFile = null;
-        	if (filename.contains(".mp3"))
-        	{
+        	if (filename.contains(".mp3")) //This is dead until we get playback
+        	{	// of .wavs other than mono signed 16 bit PCM dealt with,
+        		// as mp3 conversion does not give us one such a wav.
 	        	tempFile = File.createTempFile("fermatawavtemp" , ".wav");
 	        	tempFile.deleteOnExit();
 	        	
-	        	Converter conv = new Converter();
-	        	conv.convert(filename, tempFile.getPath());	
+	     //   	Converter conv = new Converter();
+	     //   	conv.convert(filename, tempFile.getPath());	
         	}
         	else if (filename.contains(".wav"))
         	{
