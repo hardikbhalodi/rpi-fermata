@@ -3,7 +3,7 @@ package fermataPC.midi;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
 
-import fermataPC.sound.MidiPlayer2;
+import fermataPC.sound.MidiPlayer;
 
 /**
  * The MidiReceiver deals with messages from whatever transmitter is currently
@@ -21,7 +21,7 @@ public final class MidiReceiver implements Receiver
 	@Override
 	public void close()
 	{
-		MidiPlayer2.silence();
+		MidiPlayer.silence();
 		System.out.println("Active MIDI disconnected/disabled");
 	}
 
@@ -57,11 +57,11 @@ public final class MidiReceiver implements Receiver
 		{
 		case 8: // Note off command; data1 is note.
 	//		System.out.println("Note off:" + data1);
-			MidiPlayer2.noteOff(data1, data2);
+			MidiPlayer.noteOff(data1, data2);
 			break;
 		case 9: // note on command; data 1 is note, data 2 is velocity.
 	//		System.out.println("Note on: " + data1 + "; Velocity: " + data2);
-			MidiPlayer2.noteOn(data1 , data2);
+			MidiPlayer.noteOn(data1 , data2);
 			break;
 		case 10: // aftertouch (velocity changes). data 1 is the note; data 2
 			// is the new velocity. We will likely not support this.
@@ -71,9 +71,9 @@ public final class MidiReceiver implements Receiver
 			if (data1 == 64)
 			{
 				if (data2 == 127)
-					MidiPlayer2.sustainOn();
+					MidiPlayer.sustainOn();
 				else if (data2 == 0)
-					MidiPlayer2.sustainOff();
+					MidiPlayer.sustainOff();
 			}
 	//		System.out.println("Channel property change.");
 			break;

@@ -7,7 +7,7 @@ import fermataPC.midi.MidiHandler;
 import fermataPC.osc.OSCSender;
 import fermataPC.server.ServerManager;
 import fermataPC.sound.MicListener;
-import fermataPC.sound.MidiPlayer2;
+import fermataPC.sound.MidiPlayer;
 import fermataPC.ui.FermataFrame;
 
 /**
@@ -36,7 +36,7 @@ public class Main
 
 		FilterHandler.startService(); //So things can be filtered.		
 		@SuppressWarnings("unused")
-		MidiPlayer2 mp = new MidiPlayer2();
+		MidiPlayer mp = new MidiPlayer();
 		OSCSender.startOSCService(); //so OSC messages can be sent.
 		MidiHandler.startMIDIService(); // So MIDI events can be handled.
 		MicListener.startService();
