@@ -8,7 +8,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import fermataPC.soundOut.MicListener;
+import fermataPC.sound.MicListener;
 
 /**
  * The PlayThroughBox is the GUI element enabling users to turn on and off

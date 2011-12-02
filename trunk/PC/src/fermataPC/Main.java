@@ -6,8 +6,8 @@ import fermataPC.filtering.FilterHandler;
 import fermataPC.midi.MidiHandler;
 import fermataPC.osc.OSCSender;
 import fermataPC.server.ServerManager;
-import fermataPC.soundOut.MicListener;
-import fermataPC.soundOut.midiPlayer;
+import fermataPC.sound.MicListener;
+import fermataPC.sound.midiPlayer;
 import fermataPC.ui.FermataFrame;
 
 /**
