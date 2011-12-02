@@ -4,6 +4,16 @@ import java.util.Vector;
 
 import fermataPC.util.Coordinate;
 
+/**
+ * The FilterHandler coordinates the communication between the server (phone)
+ * and the FilterProcessor, which actually filters audio. As such, the
+ * FilterHandler maintains a list of filters (which it initially fills), sets
+ * defaults, and assigns UIDs to each filter as they are loaded.
+ * 
+ * FilterHandler is a singleton.
+ * @author katzj2
+ *
+ */
 public abstract class FilterHandler
 {
 	private static Vector<Filter> availableFilters;
@@ -35,8 +45,9 @@ public abstract class FilterHandler
 		
 		addFilter(new VolumeFilter(0));
 		addFilter(new VolumeFilter(1));
-
 		
+		addFilter(new BassWobbleFilter(0));
+		addFilter(new BassWobbleFilter(1));
 		
 		// Default filters are just OSC filters on x and y axes.
 		activateFilter(0);

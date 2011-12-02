@@ -3,11 +3,26 @@ package fermataPC.filters;
 import fermataPC.util.Coordinate;
 import com.jsyn.unitgen.Multiply;
 
+/**
+ * The VolumeFilter allows manipulation of the volume of the audio
+ * from 0x to 1.275x (amplification).
+ * @author Tyler
+ *
+ */
 public class VolumeFilter extends Filter
 {
-
+	
+	/**
+	 * JSyn's Multiply can be used to do scale the signal strength.
+	 */
 	private Multiply volFilter;
 	
+	/**
+	 * Constructs the volume filter, taking an axis as an argument
+	 * to determine what axis is filtered on. Initializes
+	 * necessary fields, and adds the Multiply to the synth.
+	 * @param axis
+	 */
 	public VolumeFilter(int axis)
 	{	
 		super.axis = axis;
@@ -21,7 +36,7 @@ public class VolumeFilter extends Filter
 		
 	}
 	@Override
-	public void setCoordinate(Coordinate coord) 
+	public void setCoordinate(Coordinate coord)
 	{
 		// TODO Auto-generated method stub
 		double val = coord.getValue();

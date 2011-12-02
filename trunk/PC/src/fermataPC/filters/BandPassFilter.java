@@ -4,11 +4,22 @@ import com.jsyn.unitgen.FilterBandPass;
 
 import fermataPC.util.Coordinate;
 
+/**
+ * A band-pass filter passes audio in a narrow band around the cutoff frequency
+ * @author katzj2
+ *
+ */
 public class BandPassFilter extends Filter
 {	
-
+	/**
+	 * JSyn's built in band-pass
+	 */
 	private FilterBandPass bpf;
 
+	/**
+	 * Constructs the filter on the specified axis
+	 * @param axis 0 for x, 1 for y
+	 */
 	public BandPassFilter(int axis)
 	{		
 		super.axis = axis;

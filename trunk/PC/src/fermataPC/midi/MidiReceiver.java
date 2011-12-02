@@ -11,6 +11,8 @@ import fermataPC.soundOut.midiPlayer;
  * 
  *  The MidiReceiver reads messages from the active MidiTransmitter (this is
  *  set by MidiHandler), parses them and dispatches commands to the synthesizer
+ *  
+ *  MidiReceiver is a Singleton.
  * @author katzj2
  *
  */

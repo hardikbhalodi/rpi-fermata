@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import fermataPC.soundOut.LoadSoundFile;
+import fermataPC.soundOut.PlaySoundFile;
 
 
 @SuppressWarnings("serial")
@@ -24,6 +25,8 @@ public class SelectSoundFileBox extends JPanel implements ActionListener
 	private JLabel soundFileLabel;
 	private JFileChooser fc;
 	
+	private boolean playing = false;
+	
 	public SelectSoundFileBox()
 	{
 		super();
@@ -34,6 +37,7 @@ public class SelectSoundFileBox extends JPanel implements ActionListener
 	public void initialize()
 	{
 		playButton = new JButton("Play");
+		playButton.setEnabled(false);
 		this.add(playButton);
 		playButton.addActionListener(this);
 		
@@ -64,12 +68,26 @@ public class SelectSoundFileBox extends JPanel implements ActionListener
 				filename = file.getName();
 				absPath = file.getAbsolutePath();
 				soundFileLabel.setText(filename);
+				playButton.setEnabled(true);
 			}
 		}
 		if(e.getSource() == playButton)
 		{
-			LoadSoundFile mp3 = new LoadSoundFile(absPath);
-			mp3.play();
+			if (!playing)
+			{
+				LoadSoundFile soundLoader = new LoadSoundFile(absPath);
+				soundLoader.play();
+				playing = true;
+				playButton.setText("Stop");
+			}
+			else
+			{
+				PlaySoundFile.stop();
+				playing = false;
+				
+				playButton.setText("Play");
+			}
+			
 		}
 	}
 }

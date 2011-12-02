@@ -13,16 +13,36 @@ import com.jsyn.util.SampleLoader;
 
 import fermataPC.filters.FilterProcessor;
 
+/**
+ * Supports playback of mono signed 16 bit PCM wav files
+ * @author katzj2
+ *
+ */
 public abstract class PlaySoundFile
 {
+	private static VariableRateDataReader samplePlayer;
+	
+	public static final void stop()
+	{
+		if (samplePlayer != null)
+		{
+			FilterProcessor.synth.stopUnit(samplePlayer);
+			samplePlayer.output.disconnectAll(0);
+			samplePlayer.dataQueue.clear();
+			samplePlayer.stop();
+		}
+	}
+	/**
+	 * Attempts to play the file through the FilterProcessor. Success is only
+	 * guaranteed when the file is a mono signed 16 bit PCM wav.
+	 * @param audioFile the file to play.
+	 */
 	public static final void playStream(File audioFile)
 	{
 		FloatSample sample;
 		try
-		{			
+		{	
 			sample = SampleLoader.loadFloatSample(audioFile);
-			
-			VariableRateDataReader samplePlayer;
 			
 			boolean mono = true;
 			
