@@ -21,15 +21,17 @@ import fermataPC.util.Coordinate;
  * @author katzj2
  *
  */
-public abstract class FilterHandler
+public class FilterHandler
 {
 	private static Vector<Filter> availableFilters;
 	private static FilterProcessor fp;
+	private static final FilterHandler self = new FilterHandler();
+	
 	/**
 	 * This starts the FilterHandler neatly, giving it
 	 * filters to play with and handling activation of defaults.
 	 */
-	public static void startService()
+	private FilterHandler()
 	{
 		availableFilters = new Vector<Filter>();	
 		fp = FilterProcessor.getFilterProcessor();
@@ -61,12 +63,17 @@ public abstract class FilterHandler
 		activateFilter(1);
 	}
 	
+	public static final FilterHandler getFilterHandler()
+	{
+		return self;
+	}
+	
 	/**
 	 * Adds a filter to the list of filters, and assigns that filter its UID
 	 * so that information about it can be sent to the phone.
 	 * @param newFilter The filter to add to the filter list.
 	 */
-	private static void addFilter(Filter newFilter)
+	private final void addFilter(Filter newFilter)
 	{
 		Integer newUID = availableFilters.size();
 		newFilter.setUID(newUID);
@@ -81,7 +88,7 @@ public abstract class FilterHandler
 	 * will be the active ones at the time.
 	 * @param coord The Coordinate recieved from the phone to apply.
 	 */
-	public static void applyCoordinate(Coordinate coord)
+	public final void applyCoordinate(Coordinate coord)
 	{
 		Integer filterID = coord.getFilterID();
 		if (filterID >= 0 && filterID < availableFilters.size())
@@ -98,7 +105,7 @@ public abstract class FilterHandler
 	 * deal with duplicate activations of the same filter.
 	 * @param UID The UID of the filter to activate.
 	 */
-	private static void activateFilter(int UID)
+	private final void activateFilter(int UID)
 	{
 		//The UID is just the filter's index in the list; that's how the
 		// UID was assigned.
@@ -114,7 +121,7 @@ public abstract class FilterHandler
 	 * @return A string summarizing information about each filter for the
 	 * Android Tool to use.
 	 */
-	public static String generateFilterListString()
+	public final String generateFilterListString()
 	{
 		StringBuffer filterList = new StringBuffer();
 		for (Filter f : availableFilters)

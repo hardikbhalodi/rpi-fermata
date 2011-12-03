@@ -18,10 +18,19 @@ import fermataPC.sound.MidiPlayer;
  */
 public final class MidiReceiver implements Receiver
 {	
+	private final MidiPlayer mp = MidiPlayer.getMidiPlayer();
+	private static final MidiReceiver self = new MidiReceiver(); 
+	private MidiReceiver(){}
+	
+	public static MidiReceiver getInstance()
+	{
+		return self;
+	}
+	
 	@Override
 	public void close()
 	{
-		MidiPlayer.silence();
+		mp.silence();
 		System.out.println("Active MIDI disconnected/disabled");
 	}
 
@@ -51,17 +60,16 @@ public final class MidiReceiver implements Receiver
 		
 		Byte command = (byte) ((status >> 4) & 15); // isolating the command
 	//	Byte chan = (byte) (status & 15); // isolating the channel;
-
-	//	System.out.println("Command: " + command + "; Channel: " + chan + "; Data 1: " + data1 + "; Data 2: " + data2);
+		
 		switch (command)
 		{
 		case 8: // Note off command; data1 is note.
 	//		System.out.println("Note off:" + data1);
-			MidiPlayer.noteOff(data1, data2);
+			mp.noteOff(data1, data2);
 			break;
 		case 9: // note on command; data 1 is note, data 2 is velocity.
 	//		System.out.println("Note on: " + data1 + "; Velocity: " + data2);
-			MidiPlayer.noteOn(data1 , data2);
+			mp.noteOn(data1 , data2);
 			break;
 		case 10: // aftertouch (velocity changes). data 1 is the note; data 2
 			// is the new velocity. We will likely not support this.
@@ -71,9 +79,9 @@ public final class MidiReceiver implements Receiver
 			if (data1 == 64)
 			{
 				if (data2 == 127)
-					MidiPlayer.sustainOn();
+					mp.sustainOn();
 				else if (data2 == 0)
-					MidiPlayer.sustainOff();
+					mp.sustainOff();
 			}
 	//		System.out.println("Channel property change.");
 			break;

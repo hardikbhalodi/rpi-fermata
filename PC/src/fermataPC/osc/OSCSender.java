@@ -24,29 +24,25 @@ import fermataPC.util.Coordinate;
  * @author katzj2
  *
  */
-public abstract class OSCSender
+public class OSCSender
 {
 	public static final int DEFAULT_PORT = 7777;
-	private static InetAddress localHost;
+	private InetAddress localHost;
 	
-	private static int port;
-	private static InetAddress IP = null;
+	private int port;
+	private InetAddress IP = null;
 	
-	private static OSCPortOut sender;
+	private OSCPortOut sender;
 	
-	private static Boolean enabled = false;
-	
-	private static Boolean started = false;
+	private Boolean enabled = false;
+	private static final OSCSender self = new OSCSender();
 	
 	/**
 	 * This function does initial setup of the OSCSender so it can send
 	 * messages.
 	 */
-	public static final void startOSCService()
+	private OSCSender()
 	{
-		if (started)
-			return;
-		
 		try
 		{
 			localHost = InetAddress.getLocalHost();
@@ -75,8 +71,11 @@ public abstract class OSCSender
 		
 		IP = localHost;
 		port = DEFAULT_PORT;
-		
-		started = true;
+	}
+	
+	public static final OSCSender getOSCSender()
+	{
+		return self;
 	}
 	
 	/**
@@ -86,15 +85,15 @@ public abstract class OSCSender
 	 * @return The UDP port OSCSender sends messages on after the function is
 	 * called.
 	 */
-	public static final int setPort(int port)
+	public final int setPort(int port)
 	{
 		if (port > 1023 && port <= 65535)
 		{
-			OSCSender.port = port;
+			this.port = port;
 			disableOSC(); //closes current socket
 			enableOSC(); // opens new socket.
 		}
-		return OSCSender.port;
+		return this.port;
 	}
 	
 	/**
@@ -103,7 +102,7 @@ public abstract class OSCSender
 	 * also opens the OSCSender so it can send messages.
 	 * @return true if the socket can be opened; false otherwise.
 	 */
-	public static final Boolean enableOSC()
+	public final Boolean enableOSC()
 	{
 		try
 		{
@@ -120,7 +119,7 @@ public abstract class OSCSender
 	 * This function disables OSC pass-through, stopping it from intercepting
 	 * Coordinates as they come in from the phone.
 	 */
-	public static final void disableOSC()
+	public final void disableOSC()
 	{
 		sender.close();
 		enabled = false;
@@ -130,14 +129,14 @@ public abstract class OSCSender
 	 * Sets the IP address the UDP socket will attempt to open on so the sender
 	 * can send OSCmessages through it. If the IP is invalid, the sender will
 	 * keep its old IP.
-	 * @param IP The IP address to set the sender to.
+	 * @param IPString The IP address to set the sender to.
 	 * @return The IP address the sender uses after the function is called.
 	 */
-	public static final String setIP(String IP)
+	public final String setIP(String IPString)
 	{
 		try
 		{
-			OSCSender.IP = InetAddress.getByName(IP);
+			IP = InetAddress.getByName(IPString);
 			disableOSC();
 			enableOSC();
 		}
@@ -145,7 +144,7 @@ public abstract class OSCSender
 		{
 			e.printStackTrace();
 		}
-		return OSCSender.IP.getHostName();
+		return IP.getHostName();
 	}
 	
 	/**
@@ -153,7 +152,7 @@ public abstract class OSCSender
 	 * @param ocm The OSC Message to send through the socket.
 	 * @return true if the send is successful; false otherwise.
 	 */
-	public static final Boolean sendMessage(OSCMessage ocm)
+	public final Boolean sendMessage(OSCMessage ocm)
 	{
 		if (enabled)
 		{
@@ -178,7 +177,7 @@ public abstract class OSCSender
 	 * @param c the Coordinate to wrap into a message and send.
 	 * @return true if the send is successful; false otherwise.
 	 */
-	public static final Boolean sendCoordinate(Coordinate c)
+	public final Boolean sendCoordinate(Coordinate c)
 	{
 		if (enabled)
 		{

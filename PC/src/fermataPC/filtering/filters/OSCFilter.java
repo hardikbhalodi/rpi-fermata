@@ -16,6 +16,8 @@ import fermataPC.util.Coordinate;
  */
 public class OSCFilter extends Filter
 {
+	private final OSCSender oscSend = OSCSender.getOSCSender();
+	
 	/**
 	 * Constructs an OSC Pass-through. We send the audio it receives through
 	 * a latch, which we turn either on or off with the passAudio argument.
@@ -42,7 +44,7 @@ public class OSCFilter extends Filter
 	public void setCoordinate(Coordinate coord)
 	{
 		//sends it right along to the OSC sender.
-		OSCSender.sendCoordinate(coord);
+		oscSend.sendCoordinate(coord);
 	}
 
 	@Override

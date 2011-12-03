@@ -26,6 +26,8 @@ public class OSCSendBox extends JPanel
 	private String oldIP = "localhost";
 	private int oldPort = OSCSender.DEFAULT_PORT;
 	
+	private final OSCSender oscSend = OSCSender.getOSCSender(); 
+	
 	public OSCSendBox()
 	{
 		super();
@@ -104,7 +106,7 @@ public class OSCSendBox extends JPanel
 		else
 		{
 			oldPort = newPort;
-			newPort = OSCSender.setPort(newPort);
+			newPort = oscSend.setPort(newPort);
 		
 			portField.setValue(newPort);
 		}
@@ -118,7 +120,7 @@ public class OSCSendBox extends JPanel
 		else
 		{
 			oldIP = newIP;
-			newIP = OSCSender.setIP(newIP);
+			newIP = oscSend.setIP(newIP);
 			
 			ipField.setText(newIP);
 		}
@@ -133,7 +135,7 @@ public class OSCSendBox extends JPanel
 			{
 				if (oscEnableBox.isSelected())
 				{
-					OSCSender.enableOSC();
+					oscSend.enableOSC();
 					
 					portField.setEnabled(true);
 					localHostBox.setEnabled(true);
@@ -141,7 +143,7 @@ public class OSCSendBox extends JPanel
 				}
 				else
 				{
-					OSCSender.disableOSC();
+					oscSend.disableOSC();
 					
 					portField.setEnabled(false);
 					localHostBox.setEnabled(false);
@@ -155,11 +157,11 @@ public class OSCSendBox extends JPanel
 				
 				if (useLocalHost)
 				{
-					OSCSender.setIP("localhost");
+					oscSend.setIP("localhost");
 				}
 				else
 				{
-					ipField.setText(OSCSender.setIP(ipField.getText()));
+					ipField.setText(oscSend.setIP(ipField.getText()));
 				}
 			}
 			else if (e.getSource() == portField)

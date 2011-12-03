@@ -24,31 +24,31 @@ import com.jsyn.unitgen.LineOut;
 public final class FilterProcessor
 {	
 	/**
-	 * Only one can exist, so once it is initialized, self is returned to all
-	 * requests for FilterProcessors.
-	 */
-	private static FilterProcessor self;
-	
-	/**
 	 * This is the JSyn synthesizer. It MUST exist before anything can be done
 	 * using JSyn audio, as it coordinates actions of all JSyn objects.
 	 */
-	public static final Synthesizer synth = JSyn.createSynthesizer();
+	public static final Synthesizer synth = JSyn.createSynthesizer();	
+	
+	/**
+	 * Only one can exist, so once it is initialized, self is returned to all
+	 * requests for FilterProcessors.
+	 */
+	private static final FilterProcessor self = new FilterProcessor();
 	
 	/**
 	 * This is the list of AudioInputs the FilterProcessor listens to.
 	 */
-	private static Vector<UnitOutputPort> filterInputs;
+	private Vector<UnitOutputPort> filterInputs;
 	
 	/**
 	 * The LineOut sends audio to the sound card.
 	 */
-	public static final LineOut lineOut = new LineOut();
+	private final LineOut lineOut = new LineOut();
 	
 	/**
 	 * The currently active filters on the x and y axes.
 	 */
-	private static Filter xFilter, yFilter;
+	private Filter xFilter, yFilter;
 	
 	/**
 	 * The constructor is private, as only one FilterProcessor should exist
@@ -64,7 +64,6 @@ public final class FilterProcessor
 		double timeNow = synth.getCurrentTime();
 		double time = timeNow + .5;
 		synth.startUnit(lineOut, time);
-		self = this;
 		filterInputs = new Vector<UnitOutputPort>();
 	}
 	
@@ -75,10 +74,6 @@ public final class FilterProcessor
 	 */
 	public static FilterProcessor getFilterProcessor()
 	{
-		if (self == null)
-		{
-			self = new FilterProcessor();
-		}
 		return self;
 	}
 	
@@ -88,7 +83,7 @@ public final class FilterProcessor
 	 * input.
 	 * @param listenTo The new port to listen to.
 	 */
-	public static void connectOutput(UnitOutputPort listenTo)
+	public void connectOutput(UnitOutputPort listenTo)
 	{
 		filterInputs.add(listenTo);
 		reRouteFilters();
@@ -139,7 +134,7 @@ public final class FilterProcessor
 	 * to the LineOut so as to send audio from all of the filterInputs
 	 * through the x filter, then the y filter, and then through the lineOut.
 	 */
-	private static void reRouteFilters()
+	private void reRouteFilters()
 	{
 		System.out.println("xFilter is " + xFilter.name);
 		if (yFilter != null)

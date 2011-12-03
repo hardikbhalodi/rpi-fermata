@@ -67,9 +67,9 @@ public class PlayThroughBox extends JPanel
 		{
 			if (cbox.isSelected()) // Then they've checked it.
 			{
-				MicListener.startListening();
+				MicListener.getMicListener().startListening();
 			}
-			else MicListener.stopListening();	// They've unchecked it.
+			else MicListener.getMicListener().stopListening();	// They've unchecked it.
 		}
 	}
 }

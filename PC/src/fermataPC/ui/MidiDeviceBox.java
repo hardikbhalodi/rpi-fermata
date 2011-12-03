@@ -24,6 +24,7 @@ public final class MidiDeviceBox extends JPanel
 	private MidiDevice selectedDevice;
 	private JComboBox comboBox;
 	private JCheckBox checkBox;
+	private final MidiHandler mh = MidiHandler.getMidiHandler();
 	
 	public MidiDeviceBox()
 	{
@@ -50,7 +51,7 @@ public final class MidiDeviceBox extends JPanel
 		
 		validDevices = new Vector<MidiDevice>();
 
-		MidiHandler.setDeviceBox(this);
+		mh.setDeviceBox(this);
 	}
 	
 	private void layoutPanel()
@@ -142,14 +143,14 @@ public final class MidiDeviceBox extends JPanel
 			if (e.getSource() == comboBox)
 			{
 				if (checkBox.isSelected())
-					MidiHandler.setActiveDevice((MidiDevice) comboBox.getSelectedItem());
+					mh.setActiveDevice((MidiDevice) comboBox.getSelectedItem());
 			}
 			else if (e.getSource() == checkBox)
 			{
 				if (checkBox.isSelected())
-					MidiHandler.setActiveDevice((MidiDevice) comboBox.getSelectedItem());			
+					mh.setActiveDevice((MidiDevice) comboBox.getSelectedItem());			
 				else
-					MidiHandler.setActiveDevice(null);
+					mh.setActiveDevice(null);
 			}
 		}
 	}

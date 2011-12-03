@@ -8,7 +8,6 @@ import javax.sound.midi.Transmitter;
 
 import fermataPC.ui.MidiDeviceBox;
 
-
 /**
  * MidiHandler organizes the handling of external MIDI devices in Fermata
  * 
@@ -20,31 +19,31 @@ import fermataPC.ui.MidiDeviceBox;
  * @author katzj2
  *
  */
-public abstract class MidiHandler
+public class MidiHandler
 {
-	private static Vector<MidiDevice> validDevices;
-	private static MidiDevice activeDev;
-	private static Transmitter activeTransmit;
+	private Vector<MidiDevice> validDevices;
+	private MidiDevice activeDev;
+	private Transmitter activeTransmit;
 	
-	private static MidiReceiver mr;
+	private MidiReceiver mr;
 	@SuppressWarnings("unused")
-	private static MidiSweeper ms;
+	private MidiSweeper ms;
 	private static MidiDeviceBox mdb;
 	
-	private static Boolean started = false;
+	private static final MidiHandler self = new MidiHandler();
 	
-	public static final void startMIDIService()
+	private MidiHandler()
 	{
-		if (started)
-			return;
-		
 		validDevices = new Vector<MidiDevice>();		
 		
-		mr = new MidiReceiver();
+		mr = MidiReceiver.getInstance();
 		
 		ms = new MidiSweeper();
-		
-		started = true;
+	}
+	
+	public static final MidiHandler getMidiHandler()
+	{
+		return self;
 	}
 	
 	/**
@@ -56,7 +55,7 @@ public abstract class MidiHandler
 	 * @param deviceList A new list of valid MIDI devices.
 	 */
 	@SuppressWarnings("unchecked")
-	public static final void updateDeviceList(Vector<MidiDevice> deviceList)
+	public final void updateDeviceList(Vector<MidiDevice> deviceList)
 	{
 		if (!validDevices.equals(deviceList)) // if the list is different
 		{
@@ -74,7 +73,7 @@ public abstract class MidiHandler
 	 * Sets the MidiDeviceBox that the handler sends messages to when necessary
 	 * @param mdb The new MidiDeviceBox.
 	 */
-	public static final void setDeviceBox(MidiDeviceBox mdb)
+	public final void setDeviceBox(MidiDeviceBox mdb)
 	{
 		MidiHandler.mdb = mdb;
 		mdb.updateList(validDevices);
@@ -85,7 +84,7 @@ public abstract class MidiHandler
 	 * to for MIDI messages.
 	 * @param md The new active MIDI device.
 	 */
-	public static final void setActiveDevice(MidiDevice md)
+	public final void setActiveDevice(MidiDevice md)
 	{
 		if (md == null) //If this is null, we turn off MIDI instead.
 		{

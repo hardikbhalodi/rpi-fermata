@@ -14,8 +14,7 @@ import javax.sound.midi.MidiDevice.Info;
  * The MidiSweeper, once instantiated, this opens a new thread
  * and runs it constantly to check the status of MIDI devices;
  * and forwards the new information along to the MidiHandler.
- * Creating more than one sweeper is unnecessary and computationally
- * expensive.
+ * Creating more than one sweeper is unnecessary.
  * @author katzj2
  *
  */
@@ -23,14 +22,20 @@ public final class MidiSweeper implements Runnable
 {
 	private Vector<Info> midiInfo;
 	
+	private static boolean started = false;
+	
 	/**
-	 * The constructor starts the background process running.
+	 * The constructor starts the background process running,
+	 * unless one has already been started.
 	 */
 	public MidiSweeper()
 	{		
+		if (started)
+			return;
 		Thread t = new Thread(this);
 		
 		t.start();
+		started = true;
 	}
 	
 	/*
@@ -64,7 +69,7 @@ public final class MidiSweeper implements Runnable
 				}
 			}
 			
-			MidiHandler.updateDeviceList(tempDev); // we call the Handler to update the list
+			MidiHandler.getMidiHandler().updateDeviceList(tempDev); // we call the Handler to update the list
 			tempDev.clear(); //clear.
 			try
 			{
