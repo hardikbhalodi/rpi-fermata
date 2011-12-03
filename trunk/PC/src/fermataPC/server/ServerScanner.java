@@ -59,13 +59,13 @@ public class ServerScanner implements Runnable
 		{
 
 			Coordinate c1 = new Coordinate(newUID1, scalar1);
-			FilterHandler.applyCoordinate(c1);
+			FilterHandler.getFilterHandler().applyCoordinate(c1);
 		}
 		
 		if (UID2 != newUID2 || scalar2 != val2)
 		{
 			Coordinate c2 = new Coordinate(newUID2, scalar2);
-			FilterHandler.applyCoordinate(c2);
+			FilterHandler.getFilterHandler().applyCoordinate(c2);
 		}
 	//	System.out.println("UID1: " + UID1 + "; scalar: " + scalar1 + ";UID2: " + UID2 + "; scalar: " + scalar2);
 	}

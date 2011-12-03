@@ -6,41 +6,46 @@ import fermataPC.filtering.FilterProcessor;
 
 /**
  * The MicListener allows play-through of the system's line in to be 
- * turned on and off.
+ * turned on and off. MicListener is a singleton.
  * @author katzj2
  *
  */
-public abstract class MicListener
+public class MicListener
 {
 	private static LineIn lineIn;
 	
-	private static boolean started = false;
+	private static final MicListener self = new MicListener();
 	
 	/**
 	 * startService starts the MicListening service, intializing what little
 	 * needs to be initialized.
 	 */
-	public static final void startService()
-	{
-		if (started)
-			return;
-		
+	private MicListener()
+	{		
 		FilterProcessor.synth.add(lineIn = new LineIn());
-		started = true;		
+	}
+	
+	/**
+	 * Gets the sole instance of the MicListener singleton
+	 * @return 
+	 */
+	public static MicListener getMicListener()
+	{
+		return self;
 	}
 	
 	/**
 	 * Turns on the microphone.
 	 */
-	public static void startListening()
+	public void startListening()
 	{
-		FilterProcessor.connectOutput(lineIn.output);
+		FilterProcessor.getFilterProcessor().connectOutput(lineIn.output);
 	}
 	
 	/**
 	 * Turns off the microphone.
 	 */
-	public static void stopListening()
+	public void stopListening()
 	{
 		lineIn.output.disconnectAll(0);
 	}

@@ -12,21 +12,18 @@ import fermataPC.filtering.FilterProcessor;
 
 public final class MidiPlayer
 {
-	private static VoiceAllocator vAllocator;
-	private static VoiceFactory vFactory;
-	//private static LineOut lineOut;
+	private VoiceAllocator vAllocator;
+	private VoiceFactory vFactory;
 	
-	private static MidiPlayer self;
+	private boolean sustained;
 	
-	private static boolean sustained;
+	private HashSet<Integer> noteOffQueue;
+	private HashSet<Integer> activeNotes;
 	
-	private static HashSet<Integer> noteOffQueue;
-	private static HashSet<Integer> activeNotes;
+	private static final MidiPlayer self = new MidiPlayer();
 	
-	public MidiPlayer()
+	private MidiPlayer()
 	{
-		if (self == null)
-		{			
 			vAllocator = new VoiceAllocator(10);
 			vFactory = new CustomVoiceFactory();
 			vAllocator.setVoiceFactory(vFactory);
@@ -37,10 +34,14 @@ public final class MidiPlayer
 			SineOscillator sin = new SineOscillator();
 			
 			FilterProcessor.synth.add(sin);
-		}	
 	}
 	
-	public static final void noteOn(int note, int velocity)
+	public static MidiPlayer getMidiPlayer()
+	{
+		return self;
+	}
+	
+	public final void noteOn(int note, int velocity)
 	{
 		UnitVoice voice = vAllocator.allocate(note);
 		double amplitude = velocity / 127.0;
@@ -53,7 +54,7 @@ public final class MidiPlayer
 			noteOffQueue.remove(note);
 	}
 	
-	public static final void noteOff(int note, int velocity)
+	public final void noteOff(int note, int velocity)
 	{
 		if (sustained)
 		{
@@ -68,29 +69,29 @@ public final class MidiPlayer
 		}
 	}
 	
-	public static final void silence()
+	public final void silence()
 	{
 		for (Integer note : activeNotes)
 		{
-			MidiPlayer.noteOff(note, 127);
+			noteOff(note, 127);
 		}
 	}
 	
-	public static final void sustainOn()
+	public final void sustainOn()
 	{
 		sustained = true;
 	}
 	
-	public static final void sustainOff()
+	public final void sustainOff()
 	{
 		sustained = false;
 		for (Integer note : noteOffQueue)
 		{
-			MidiPlayer.noteOff(note, 127);
+			noteOff(note, 127);
 		}
 	}
 	
-	private static double pitchToFreq(double pitch)
+	private double pitchToFreq(double pitch)
 	{
 		return 440.0 * Math.pow(2.0, ((pitch - 69) * (1.0 / 12.0)) );
 	}
@@ -103,7 +104,7 @@ public final class MidiPlayer
 			ClassicSynthVoice voice = new ClassicSynthVoice();
 			FilterProcessor.synth.add(voice);
 			
-			FilterProcessor.connectOutput(voice.getOutput());
+			FilterProcessor.getFilterProcessor().connectOutput(voice.getOutput());
 			return voice;
 		}
 		

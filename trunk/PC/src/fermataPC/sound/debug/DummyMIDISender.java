@@ -14,25 +14,27 @@ public class DummyMIDISender implements Runnable
 	@Override
 	public void run()
 	{
+		
+		MidiPlayer mp = MidiPlayer.getMidiPlayer();
 		try{
 			for(;;)
 			{
 				System.out.println("note on");
-				MidiPlayer.noteOn(69 , 63);
+				mp.noteOn(69 , 63);
 				
 				Thread.sleep(4000);
 				System.out.println("note off");
-				MidiPlayer.noteOff(69, 63);
+				mp.noteOff(69, 63);
 				
 				Thread.sleep(4000);
 				
 				System.out.println("note on 2");
 				
-				MidiPlayer.noteOn(69 , 63);
+				mp.noteOn(69 , 63);
 				
 				Thread.sleep(10000);
 				System.out.println("note off 2");
-				MidiPlayer.noteOff(69 , 63);
+				mp.noteOff(69 , 63);
 				
 				Thread.sleep(10000);
 			}

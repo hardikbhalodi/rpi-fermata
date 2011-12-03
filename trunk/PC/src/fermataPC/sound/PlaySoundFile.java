@@ -71,12 +71,12 @@ public abstract class PlaySoundFile
 			
 			if (mono)
 			{
-				FilterProcessor.connectOutput(samplePlayer.output);
+				FilterProcessor.getFilterProcessor().connectOutput(samplePlayer.output);
 			}
 			else
 			{
-				samplePlayer.output.connect(0, FilterProcessor.lineOut.input, 0);
-				samplePlayer.output.connect(1, FilterProcessor.lineOut.input, 1);
+		//		samplePlayer.output.connect(0, FilterProcessor.lineOut.input, 0);
+		//		samplePlayer.output.connect(1, FilterProcessor.lineOut.input, 1);
 			}
 		}
 		catch (IOException e)
