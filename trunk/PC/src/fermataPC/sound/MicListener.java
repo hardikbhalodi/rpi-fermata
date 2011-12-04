@@ -47,6 +47,6 @@ public class MicListener
 	 */
 	public void stopListening()
 	{
-		lineIn.output.disconnectAll(0);
+		FilterProcessor.getFilterProcessor().disconnectOutput(lineIn.output);
 	}
 }

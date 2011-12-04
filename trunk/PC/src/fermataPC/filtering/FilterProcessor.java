@@ -90,6 +90,19 @@ public final class FilterProcessor
 	}
 	
 	/**
+	 * Takes an output port and removes it from the filterProcessor to ensure
+	 * the filterProcessor no longer listens to it. Calls reRouteFilters to
+	 * force filters to ignore the input.
+	 * @param disconnect The port to disconnect.
+	 */
+	public void disconnectOutput(UnitOutputPort disconnect)
+	{
+		disconnect.disconnectAll(0);
+		filterInputs.remove(disconnect);
+		reRouteFilters();
+	}
+	
+	/**
 	 * activateFilter activates the filter it is passed on that filter's axis,
 	 * and deactivates whatever filter follows it.
 	 * 
