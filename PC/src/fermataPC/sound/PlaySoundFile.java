@@ -27,7 +27,7 @@ public abstract class PlaySoundFile
 		if (samplePlayer != null)
 		{
 			FilterProcessor.synth.stopUnit(samplePlayer);
-			samplePlayer.output.disconnectAll(0);
+			FilterProcessor.getFilterProcessor().disconnectOutput(samplePlayer.output);
 			samplePlayer.dataQueue.clear();
 			samplePlayer.stop();
 		}
