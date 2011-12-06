@@ -8,6 +8,7 @@ import fermataPC.filtering.filters.BassWobbleFilter;
 import fermataPC.filtering.filters.HiPassFilter;
 import fermataPC.filtering.filters.LowPassFilter;
 import fermataPC.filtering.filters.OSCFilter;
+import fermataPC.filtering.filters.TremeloFilter;
 import fermataPC.filtering.filters.VolumeFilter;
 import fermataPC.util.Coordinate;
 
@@ -57,6 +58,9 @@ public class FilterHandler
 		
 		addFilter(new BassWobbleFilter(0));
 		addFilter(new BassWobbleFilter(1));
+		
+		addFilter(new TremeloFilter(0));
+		addFilter(new TremeloFilter(1));
 		
 		// Default filters are just OSC filters on x and y axes.
 		activateFilter(0);

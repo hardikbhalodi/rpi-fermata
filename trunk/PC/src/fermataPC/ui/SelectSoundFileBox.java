@@ -14,6 +14,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import fermataPC.sound.LoadSoundFile;
 import fermataPC.sound.PlaySoundFile;
 
+/**
+ * Adds ui elements which allows for selection of a sound file, and starting and stopping playback of that file.
+ * This class also enforces sound file format (mono 16 signed WAV), and swaps play button and stop button
+ * when necessary.
+ * @author Tyler Sammann, katzj2
+ * 
+ */
 
 @SuppressWarnings("serial")
 public class SelectSoundFileBox extends JPanel implements ActionListener
