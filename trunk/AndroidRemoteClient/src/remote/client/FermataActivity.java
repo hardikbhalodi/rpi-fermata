@@ -67,8 +67,8 @@ public class FermataActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		xfilter = 0;
-		yfilter = 0;
+		xfilter = 0; //default to OSC Pass-through (x)
+		yfilter = 1; //default to OSC Pass-Through (y)
 		xfilterName = "None";
 		yfilterName = "None";
 		
@@ -242,9 +242,9 @@ public class FermataActivity extends Activity {
 				//yfilter=1;
 				final TextView textView = (TextView)findViewById(R.id.textView);
 
-				xfilterName = "OSC Passthrough (X)";
+				xfilterName = "OSC Passthrough (x)";
 
-				yfilterName = "OSC Pass-through (Y)";
+				yfilterName = "OSC Pass-through (y)";
 				textView.setText("X: " + xfilterName +"\n"+  "Y: " + yfilterName);
 
 			}
