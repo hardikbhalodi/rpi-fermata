@@ -10,7 +10,7 @@ To install and use Fermata, download both the Fermata.apk and the Fermata.jar an
 ==Android==
 Installation: Download the APK from the project website on your Android device (http://code.google.com/p/rpi-fermata/downloads/list). Once it has been downloaded select the APK and click install on the following page. 
 
-====Usage====
+===Usage===
  Launch the application. Connect in one of two methods described below. Once connected, press the menu button again two new options are available. Select X filter, and Select Y filter. Select the filters as you see fit. Now just drag your finger around the screen to change filter parameters - happy filtering.
 
 ====Bluetooth====
