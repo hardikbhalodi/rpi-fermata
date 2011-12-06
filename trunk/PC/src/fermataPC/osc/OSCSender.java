@@ -21,6 +21,8 @@ import fermataPC.util.Coordinate;
  * out. It will keep track of the current port and IP address it sends to,
  * and ensure that these are all valid.
  * 
+ * OSCSender is a singleton.
+ * 
  * @author katzj2
  *
  */

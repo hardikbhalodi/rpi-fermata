@@ -32,7 +32,7 @@ public class CoordinateMessage extends OSCMessage
 		for (Coordinate c : coordList)
 		{
 			this.addArgument(c.getFilterID());
-			this.addArgument(c.getValue() * -1);
+			this.addArgument((c.getValue() * -1) - 1);
 		}
 	}
 	
@@ -46,7 +46,7 @@ public class CoordinateMessage extends OSCMessage
 		this.setAddress("/fermataCoordinates");
 		
 		this.addArgument(c.getFilterID());
-		this.addArgument(c.getValue() * -1);
+		this.addArgument((c.getValue() * -1) - 1);
 	}
 	
 }
