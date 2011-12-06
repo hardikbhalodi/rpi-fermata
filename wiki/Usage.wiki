@@ -17,7 +17,7 @@ Installation: Download the APK from the project website on your Android device (
  For a Bluetooth connection ensure your device is paired with your computer. Select the Bluetooth option. A list will appear with all paired computers. Select the computer that is running the PC tool. A message notifying the success (or failure) of the connection will appear in a few seconds.
 
 ===TCP/IP===
- For a TCP/IP connection ensure both devices are on the same network. Select the connect via IP option. Enter the IP (or domain) of the server followed by a colon and the port. Example: '128.0.0.1:9876'. A message notifying the success (or failure) of the connection will appear in a few seconds.
+ For a TCP/IP connection ensure both devices are on the same network. Select the connect via IP option. Enter the IP (or domain) of the server followed by a colon and the port. Example: `<128.0.0.1>:<9876>`. A message notifying the success (or failure) of the connection will appear in a few seconds.
 
 
 == PC ==
