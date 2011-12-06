@@ -1,0 +1,5 @@
+#summary A short summary of the functionality of each filter presently included in Fermata.
+#labels Featured
+
+=Introduction=
+Each filter exists to process audio, with the exception of the OSC Pass-through filter, which has its own page [OSCPassThrough here].
