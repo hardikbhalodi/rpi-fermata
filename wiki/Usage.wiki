@@ -1,11 +1,9 @@
-#summary One-sentence summary of this page.
+#summary Installing and using the software.
 #labels Phase-Deploy
 
-= Introduction =
+= Short version =
 
-To install and use Fermata, download both the Fermata.apk and the Fermata.jar.
-
-
+To install and use Fermata, download both the Fermata.apk and the Fermata.jar and open/run them on your Android and PC respectively.
 
 = Details =
 
