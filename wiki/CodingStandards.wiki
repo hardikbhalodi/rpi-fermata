@@ -1,11 +1,6 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
-
-This page contains our Coding-Standard
-
-
-= Details =
+= Coding-Standard =
 
 Naming Scheme: Naming should be done in standard JAVA camel case. 
 
