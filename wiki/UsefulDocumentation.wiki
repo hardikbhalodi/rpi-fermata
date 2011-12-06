@@ -1,4 +1,4 @@
-#Contains a list of useful documentation on the web.#
+#summary Contains a list of useful documentation on the web.#
 
 Android: http://developer.android.com/guide/index.html
 
