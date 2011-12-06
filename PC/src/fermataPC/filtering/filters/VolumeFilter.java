@@ -8,7 +8,7 @@ import com.jsyn.unitgen.Multiply;
 /**
  * The VolumeFilter allows manipulation of the volume of the audio
  * from 0x to 1.275x (amplification).
- * @author Tyler
+ * @author Tyler Sammann
  *
  */
 public class VolumeFilter extends Filter

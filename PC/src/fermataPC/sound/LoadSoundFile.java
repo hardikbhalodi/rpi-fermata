@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * Supports the loading/conversion of sound files into formats which can be
  * played by the PlayAudio class.
- * @author Tyler, katzj2
+ * @author Tyler Sammann, katzj2
  *
  */
 public class LoadSoundFile 
